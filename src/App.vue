@@ -1,11 +1,21 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <nav v-if="showNav">
+    <router-link :to="{name: 'standard'}">Standard</router-link> |
+    <router-link :to="{ name:'advance' }">Advanced</router-link>
   </nav>
   <router-view/>
 </template>
 
+<script>
+export default {
+  computed: {
+    showNav () {
+      return this.$route.path !== '/result'
+}
+  }
+
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
