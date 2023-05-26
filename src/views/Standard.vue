@@ -12,9 +12,9 @@
         </div>
         <div class="meta-data">
             <label for="ig">Inter green time:</label>
-                <input type="radio" id="default" name="speedig" value="default" v-model="ig_mode" checked> Default:
+                <input type="radio" id="default" name="speedig" value="true" v-model="ig_mode"> Default:
                 <input type="text" class="input-text" name="ig" v-model="ig">s
-                <input type="radio" id="upload" name="speedig" value="upload" v-model="ig_mode"> Upload
+                <input type="radio" id="upload" name="speedig" value="false" v-model="ig_mode"> Upload
                 <input type="file" id="file" name="filename">
         </div>
     </div>
@@ -34,7 +34,7 @@
 <div class="config">
     <div class="north">
         <div>
-            <input type="text" class="n-combine" id="combn" v-model="ncomb">
+            <input type="text" class="n-combine" id="combn" v-model="ncomb" placeholder="eg:22,24">
         </div>
         <div>
             <input type="text" class="n-flow" id="flow26" v-model="f26">
@@ -50,7 +50,7 @@
     <div class="image-row">
         <div class="west">
             <div>
-                <input type="text" class="w-combine" id="combw" v-model="wcomb">
+                <input type="text" class="w-combine" id="combw" v-model="wcomb" placeholder="eg:32,34">
             </div>
             <div>
                 <input type="text" class="w-flow" id="flow32" v-model="f32"><br>
@@ -96,7 +96,7 @@
                 <input type="text" class="e-flow" id="flow16" v-model="f16">
             </div>
             <div>
-                <input type="text" class="e-combine" id="combe" v-model="ecomb">
+                <input type="text" class="e-combine" id="combe" v-model="ecomb" placeholder="eg:12,14">
             </div>
         </div>
     </div>
@@ -113,7 +113,7 @@
             <input type="text" class="s-flow" id="flow6" v-model="f6">
         </div>
         <div>
-            <input type="text" class="s-combine" id="combs" v-model="scomb">
+            <input type="text" class="s-combine" id="combs" v-model="scomb" placeholder="eg:2,4">
         </div>
     </div>
 
@@ -124,18 +124,41 @@
 </div>
 
 <div v-if="process">
-    <h1>Name of movement</h1>
-    <div v-for="(combine,index) in mvt" :key="index">
-        <label for="">{{ combine }}:</label>
-        <input type="text" class="input-name" :id="combine" v-model="nameofmvt[combine]">
+    <div class="next-title">
+        <h2 >Name of movement and calculation details</h2>
     </div>
+    <div style="display: flex;align-items: center; justify-content: center;">
+        <div class="name-container">
+        <div v-for="(combine,index) in mvt" :key="index" class="name-element">
+        <label for="">
+            {{ combine }}:<input type="text" class="input-name" :id="combine" v-model="nameofmvt[combine]">
+        </label>
+        </div>
+        </div>
+    </div>
+
     <div>
         <label for="secondary">Authorized conflict:</label>
-        <input type="text" class="authorize" id="secondary" v-model="authorize">
+        <input type="text" class="authorize" id="secondary" placeholder="eg:V1,V2;P5,V4" v-model="authorize">
+    </div>
+
+    <div class="details">
+        <label class="checkbox">
+        <input type="checkbox" v-model="opt">
+        Green optimization
+        </label>
+        <label class="checkbox">
+        <input type="checkbox" v-model="conflict">
+        Conflict critical movement
+        </label>
+        <label for="savefile" class="checkbox">    
+        Filename:
+        <input type="text" id="savefile" placeholder="example.pdf" v-model="savepath">
+        </label>
     </div>
 
     <div class="next" ref="bottomElement">
-        <router-link :to="{name:'result'}">
+        <router-link :to="{ name : 'result'}">
             <button class="nextstep" @click="callAPI" id="submit">Submit</button>
         </router-link>
     </div>
@@ -152,7 +175,7 @@ export default {
         return {
             cycle:90,
             iv:2,
-            ig_mode:'default',
+            ig_mode:true,
             ig:7,
             filename:'',
             speedped:1,
@@ -184,6 +207,10 @@ export default {
             nameofmvt: {},
             mvt:[],
             authorize:'',
+
+            opt:false,
+            conflict:false,
+            savepath:'',
         }
     },
     methods: {
@@ -236,7 +263,9 @@ export default {
             for (const each of composition)
                 mvt.push(each);
 
-            mvt = mvt.concat(this.checkedped)
+            mvt = mvt.concat(this.checkedped.map(str => parseInt(str)))
+            // Sort list
+            mvt.sort((a, b) => (typeof a === 'number' ? a : a[0]) - (typeof b === 'number' ? b : b[0]));
             this.mvt = mvt
             
             // Show name component
@@ -255,10 +284,14 @@ export default {
                 'parameters':{'ivt':this.iv,'vw':this.speedped,'vwig':this.speedpedig,'ig':this.ig},
                 'compose':this.compose,
                 'name':this.nameofmvt,
-                'secondary':this.authorize
+                'secondary':this.authorize,
+                'default':this.ig_mode,
+                'opt':this.opt,
+                'conflict':this.conflict,
+                'savepath':this.savepath
             }
 
-            axios.post('http://localhost:8000/apitest',data)
+            axios.post('http://localhost:8000/standard',data)
             .then(response => {
                 console.log('Post success!')
                 console.log(response.data);
