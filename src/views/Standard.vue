@@ -15,7 +15,7 @@
                 <input type="radio" id="default" name="speedig" value="true" v-model="ig_mode"> Default:
                 <input type="text" class="input-text" name="ig" v-model="ig">s
                 <input type="radio" id="upload" name="speedig" value="false" v-model="ig_mode"> Upload
-                <input type="file" id="file" name="filename">
+                <input type="file" id="file" name="filename" @change="handleFileUpload">
         </div>
     </div>
 
@@ -177,7 +177,7 @@ export default {
             iv:2,
             ig_mode:true,
             ig:7,
-            filename:'',
+            file:null,
             speedped:1,
             speedpedig:1.2,
             checkedbox:[],
@@ -206,14 +206,17 @@ export default {
             process:false,
             nameofmvt: {},
             mvt:[],
-            authorize:'',
+            authorize:null,
 
             opt:false,
             conflict:false,
-            savepath:'',
+            savepath:null,
         }
     },
     methods: {
+        handleFileUpload(event) {
+            this.file = event.target.files[0]
+        },
         preprocess(event) {     
             // Clear name
             this.nameofmvt = {}
@@ -280,18 +283,35 @@ export default {
         },
 
         callAPI() {
-            const data = {
-                'parameters':{'ivt':this.iv,'vw':this.speedped,'vwig':this.speedpedig,'ig':this.ig},
-                'compose':this.compose,
-                'name':this.nameofmvt,
-                'secondary':this.authorize,
-                'default':this.ig_mode,
-                'opt':this.opt,
-                'conflict':this.conflict,
-                'savepath':this.savepath
-            }
 
-            axios.post('http://localhost:8000/standard',data)
+            const formData = new FormData();
+            formData.append('file', this.file);
+
+            // Append other data properties to the formData object
+            formData.append('parameters',{'ivt':this.iv,'vw':this.speedped,'vwig':this.speedpedig,'ig':this.ig})
+            formData.append('compose',this.compose)
+            formData.append('name',this.nameofmvt)
+            formData.append('secondary',this.authorize)
+            formData.append('default',this.ig_mode,)
+            formData.append('opt',this.opt)
+            formData.append('conflict',this.conflict)
+            formData.append('savepath',this.savepath)
+            // const data = {
+            //     'parameters':{'ivt':this.iv,'vw':this.speedped,'vwig':this.speedpedig,'ig':this.ig},
+            //     'compose':this.compose,
+            //     'name':this.nameofmvt,
+            //     'secondary':this.authorize,
+            //     'default':this.ig_mode,
+            //     'opt':this.opt,
+            //     'conflict':this.conflict,
+            //     'savepath':this.savepath
+            // }
+
+            axios.post('http://localhost:8000/standard',formData,{
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            })
             .then(response => {
                 console.log('Post success!')
                 console.log(response.data);
