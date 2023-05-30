@@ -158,9 +158,10 @@
     </div>
 
     <div class="next" ref="bottomElement">
-        <router-link :to="{ name : 'result'}">
+        <!-- <router-link :to="{ name : 'result'}">
             <button class="nextstep" @click="callAPI" id="submit">Submit</button>
-        </router-link>
+        </router-link> -->
+        <button class="nextstep" @click="callAPI" id="submit">Submit</button>
     </div>
    
 </div>
@@ -284,33 +285,31 @@ export default {
 
         callAPI() {
 
-            const formData = new FormData();
-            formData.append('file', this.file);
+            const data = new FormData();
+            // Append data properties to the FormData object
+            data.append('parameters',JSON.stringify({'ivt':this.iv,'vw':this.speedped,'vwig':this.speedpedig,'ig':this.ig}))
+            data.append('compose',JSON.stringify(this.compose))
+            data.append('name',JSON.stringify(this.nameofmvt))
+            data.append('secondary',this.authorize)
+            data.append('default',this.ig_mode)
+            data.append('opt',this.opt)
+            data.append('conflict',this.conflict)
+            data.append('savepath',this.savepath)
 
-            // Append other data properties to the formData object
-            formData.append('parameters',{'ivt':this.iv,'vw':this.speedped,'vwig':this.speedpedig,'ig':this.ig})
-            formData.append('compose',this.compose)
-            formData.append('name',this.nameofmvt)
-            formData.append('secondary',this.authorize)
-            formData.append('default',this.ig_mode,)
-            formData.append('opt',this.opt)
-            formData.append('conflict',this.conflict)
-            formData.append('savepath',this.savepath)
-            // const data = {
-            //     'parameters':{'ivt':this.iv,'vw':this.speedped,'vwig':this.speedpedig,'ig':this.ig},
-            //     'compose':this.compose,
-            //     'name':this.nameofmvt,
-            //     'secondary':this.authorize,
-            //     'default':this.ig_mode,
-            //     'opt':this.opt,
-            //     'conflict':this.conflict,
-            //     'savepath':this.savepath
-            // }
+            let endpoint = null
+            if (this.ig_mode != true){
+                // Append file to the FormData object
+                data.append('file', this.file);
+                endpoint = 'standard-upload'
 
-            axios.post('http://localhost:8000/standard',formData,{
+            } else {
+                endpoint = 'standard-default'
+            }
+
+            axios.post('http://localhost:8000/' + endpoint,data,{
             headers: {
-                'Content-Type': 'multipart/form-data'
-            },
+            'Content-Type': 'multipart/form-data'
+            }
             })
             .then(response => {
                 console.log('Post success!')
@@ -319,6 +318,8 @@ export default {
             .catch(error => {
                 console.error(error)
             })
+            
+
         },
 
         getname () {
