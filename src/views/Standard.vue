@@ -15,7 +15,9 @@
                 <input type="radio" id="default" name="speedig" value="true" v-model="ig_mode"> Default:
                 <input type="text" class="input-text" name="ig" v-model="ig">s
                 <input type="radio" id="upload" name="speedig" value="false" v-model="ig_mode"> Upload
-                <input type="file" id="file" name="filename" @change="handleFileUpload">
+                <div v-if="ig_mode=='false'" style="display: inline;">
+                    <input type="file" id="file" name="filename" @change="handleFileUpload">
+                </div>
         </div>
     </div>
 
@@ -158,10 +160,9 @@
     </div>
 
     <div class="next" ref="bottomElement">
-        <!-- <router-link :to="{ name : 'result'}">
+        <router-link :to="{ name : 'result'}">
             <button class="nextstep" @click="callAPI" id="submit">Submit</button>
-        </router-link> -->
-        <button class="nextstep" @click="callAPI" id="submit">Submit</button>
+        </router-link>
     </div>
    
 </div>
