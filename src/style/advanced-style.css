@@ -45,15 +45,43 @@
 }
 
 .n-flow,.s-flow {
-    width: 40px;
+    width: 20px;
     height: 20px;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 13px;
+    margin-right: 13px;
+}
+
+.n-flow-t,.s-flow-t {
+    width: 20px;
+    height: 20px;
+    margin-left: 13px;
+    margin-right: 13px;
+    border-color: red;
+}
+
+.n-flow-b,.s-flow-b {
+    width: 20px;
+    height: 20px;
+    margin-left: 13px;
+    margin-right: 13px;
+    border-color: purple;
 }
 
 .n-contain,.s-contain {
-    margin-left: 18px;
-    margin-right: 18px;
+    margin-left: 21px;
+    margin-right: 21px;
+}
+
+.n-contain-t,.s-contain-t {
+    margin-left: 21px;
+    margin-right: 21px;
+    border-color: red;
+}
+
+.n-contain-b,.s-contain-b {
+    margin-left: 21px;
+    margin-right: 21px;
+    border-color: purple;
 }
 
 .west {
@@ -76,12 +104,32 @@
 }
 
 .e-flow,.w-flow {
-    width: 40px;
+    width: 20px;
     height: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     margin-left: 5px;
     margin-right: 5px;
+}
+
+.e-flow-t,.w-flow-t {
+    width: 20px;
+    height: 20px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-color: red;
+}
+
+.e-flow-b,.w-flow-b {
+    width: 20px;
+    height: 20px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-color: purple;
 }
 
 .e-contain,.w-contain {
@@ -92,7 +140,12 @@
 .standard-fig {
     width: 100%;
     height: auto;
-    min-width: 350px;
+    min-width: 600px;
+}
+
+.bus {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .next {

@@ -33,7 +33,9 @@
     </div>
 </div>
 
-<div class="config">
+<div class="config-grid">
+    <div>
+    </div>
     <div class="north">
         <div>
             <input type="text" class="n-combine" id="combn" v-model="ncomb" placeholder="eg:22,24">
@@ -49,60 +51,60 @@
             <input type="checkbox" class="n-contain" id="contain22" value="22" v-model="checkedbox">
         </div>
     </div>
-    <div class="image-row">
-        <div class="west">
-            <div>
-                <input type="text" class="w-combine" id="combw" v-model="wcomb" placeholder="eg:32,34">
-            </div>
-            <div>
-                <input type="text" class="w-flow" id="flow32" v-model="f32"><br>
-                <input type="text" class="w-flow" id="flow34" v-model="f34"><br>
-                <input type="text" class="w-flow" id="flow36" v-model="f36">
-            </div>
-            <div>
-                <input type="checkbox" class="w-contain" id="contain32" value="32" v-model="checkedbox"><br>
-                <input type="checkbox" class="w-contain" id="contain34" value="34" v-model="checkedbox"><br>
-                <input type="checkbox" class="w-contain" id="contain36" value="36" v-model="checkedbox">
-            </div>
+    <div>
+    </div>
+    <div class="west">
+        <div>
+            <input type="text" class="w-combine" id="combw" v-model="wcomb" placeholder="eg:32,34">
         </div>
-
-        <div style="position: relative;">
-            <img class="standard-fig" src="../assets/standard.png">
-            <div style="position: absolute;top: 30%;left: 40%;">
-                <input type="checkbox" class="n-contain" id="ped42" value="42" v-model="checkedped">
-                <input type="text" class="n-flow" id="width42" v-model="w42">
-            </div>
-            <div style="position: absolute;top: 40%;right: 30%">
-                <input type="checkbox" class="e-contain" id="ped41" value="41" v-model="checkedped"><br>
-                <input type="text" class="e-flow" id="width41" v-model="w41">
-            </div>
-            <div style="position: absolute;top: 65%;left: 40%;">
-                <input type="checkbox" class="s-contain" id="ped40" value="40" v-model="checkedped">
-                <input type="text" class="s-flow" id="width40" v-model="w40">
-            </div>
-            <div style="position: absolute;top: 40%;right: 60%;">
-                <input type="checkbox" class="w-contain" id="ped43" value="43" v-model="checkedped"><br>
-                <input type="text" class="w-flow" id="width43" v-model="w43">
-            </div>
+        <div>
+            <input type="text" class="w-flow" id="flow32" v-model="f32"><br>
+            <input type="text" class="w-flow" id="flow34" v-model="f34"><br>
+            <input type="text" class="w-flow" id="flow36" v-model="f36">
         </div>
-        <div class="east">
-            <div>
-                <input type="checkbox" class="e-contain" id="contain12" value="12" v-model="checkedbox"><br>
-                <input type="checkbox" class="e-contain" id="contain14" value="14" v-model="checkedbox"><br>
-                <input type="checkbox" class="e-contain" id="contain16" value="16" v-model="checkedbox">
-            </div>
-
-            <div>
-                <input type="text" class="e-flow" id="flow12" v-model="f12"><br>
-                <input type="text" class="e-flow" id="flow14" v-model="f14"><br>
-                <input type="text" class="e-flow" id="flow16" v-model="f16">
-            </div>
-            <div>
-                <input type="text" class="e-combine" id="combe" v-model="ecomb" placeholder="eg:12,14">
-            </div>
+        <div>
+            <input type="checkbox" class="w-contain" id="contain32" value="32" v-model="checkedbox"><br>
+            <input type="checkbox" class="w-contain" id="contain34" value="34" v-model="checkedbox"><br>
+            <input type="checkbox" class="w-contain" id="contain36" value="36" v-model="checkedbox">
         </div>
     </div>
+    <div style="position: relative;">
+        <img class="standard-fig" src="../assets/standard.png">
+        <div style="position: absolute;top: 30%;left: 40%;">
+            <input type="checkbox" class="n-contain" id="ped42" value="42" v-model="checkedped">
+            <input type="text" class="n-flow" id="width42" v-model="w42" :style="w42 ? 'background-color: white;' : 'background-color: transparent;'">
+        </div>
+        <div style="position: absolute;top: 40%;right: 30%">
+            <input type="checkbox" class="e-contain" id="ped41" value="41" v-model="checkedped"><br>
+            <input type="text" class="e-flow" id="width41" v-model="w41" :style="w41 ? 'background-color: white;' : 'background-color: transparent;'">
+        </div>
+        <div style="position: absolute;top: 65%;left: 40%;">
+            <input type="checkbox" class="s-contain" id="ped40" value="40" v-model="checkedped">
+            <input type="text" class="s-flow" id="width40" v-model="w40" :style="w40 ? 'background-color: white;' : 'background-color: transparent;'">
+        </div>
+        <div style="position: absolute;top: 40%;right: 60%;">
+            <input type="checkbox" class="w-contain" id="ped43" value="43" v-model="checkedped"><br>
+            <input type="text" class="w-flow" id="width43" v-model="w43" :style="w43 ? 'background-color: white;' : 'background-color: transparent;'">
+        </div>
+    </div>
+    <div class="east">
+        <div>
+            <input type="checkbox" class="e-contain" id="contain12" value="12" v-model="checkedbox"><br>
+            <input type="checkbox" class="e-contain" id="contain14" value="14" v-model="checkedbox"><br>
+            <input type="checkbox" class="e-contain" id="contain16" value="16" v-model="checkedbox">
+        </div>
 
+        <div>
+            <input type="text" class="e-flow" id="flow16" v-model="f16"><br>
+            <input type="text" class="e-flow" id="flow14" v-model="f14"><br>
+            <input type="text" class="e-flow" id="flow12" v-model="f12">
+        </div>
+        <div>
+            <input type="text" class="e-combine" id="combe" v-model="ecomb" placeholder="eg:12,14">
+        </div>
+    </div>
+    <div>
+    </div>
     <div class="south">
         <div>
             <input type="checkbox" class="s-contain" id="contain2" value="2" v-model="checkedbox">
@@ -117,6 +119,8 @@
         <div>
             <input type="text" class="s-combine" id="combs" v-model="scomb" placeholder="eg:2,4">
         </div>
+    </div>
+    <div>
     </div>
 
 </div>
@@ -330,6 +334,5 @@ export default {
 }
 </script>
 
-<style>
-@import '../style/standard-style.css';
+<style scoped src="../style/standard-style.css">
 </style>
