@@ -248,6 +248,7 @@ export default {
                     let listOfTuples = comb.split(';').map(tupleString => tupleString.split(',').map(Number));
                     for (let tuple of listOfTuples) {
                         if (tuple.length > 0) {
+                            tuple = tuple.sort()
                             comp.push(tuple);
                             combined = combined.concat(tuple)
                         }

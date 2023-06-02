@@ -179,8 +179,8 @@
       <div></div>
       <div></div>
       <div class="bus">
-      <label for="bus"><b>Bus lanes:</b></label>
-      <input type="text" id="bus" class="n-combine" placeholder="eg:1;12;24;36" v-model="bus" style="margin-left: 5px;">
+      <label for="bus" style="font-size: 20px"><b>Bus lanes:</b></label>
+      <input type="text" id="bus" placeholder="eg:1;12;24;36" v-model="bus" style="margin-left: 5px;height: 30px;width: 150px;">
       </div>  
       <div></div>
   </div>
@@ -224,9 +224,10 @@
       </div>
   
       <div class="next" ref="bottomElement">
-          <router-link :to="{ name : 'result'}">
+          <!-- <router-link :to="{ name : 'result'}">
               <button class="nextstep" @click="callAPI" id="submit">Submit</button>
-          </router-link>
+          </router-link> -->
+          <button class="nextstep" @click="callAPI" id="submit">Submit</button>
       </div>
      
   </div>
@@ -302,8 +303,9 @@
                       let listOfTuples = comb.split(';').map(tupleString => tupleString.split(',').map(Number));
                       for (let tuple of listOfTuples) {
                           if (tuple.length > 0) {
-                              comp.push(tuple);
-                              combined = combined.concat(tuple)
+                            tuple = tuple.sort()
+                            comp.push(tuple);
+                            combined = combined.concat(tuple)
                           }
                           }
                       }
