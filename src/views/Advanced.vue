@@ -348,7 +348,7 @@
   
               const data = new FormData();
               // Append data properties to the FormData object
-              data.append('parameters',JSON.stringify({'ivt':this.iv,'vw':this.speedped,'vwig':this.speedpedig,'ig':this.ig}))
+              data.append('parameters',JSON.stringify({'cycle':this.cycle, 'ivt':this.iv,'vw':this.speedped,'vwig':this.speedpedig,'ig':this.ig}))
               data.append('compose',JSON.stringify(this.compose))
               data.append('name',JSON.stringify(this.nameofmvt))
               data.append('secondary',this.authorize)
