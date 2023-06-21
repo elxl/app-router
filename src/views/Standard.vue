@@ -175,6 +175,7 @@
 
 <script>
 import axios from 'axios'
+import config from '../../config.json'
 
 export default {
     data () {
@@ -312,7 +313,7 @@ export default {
                 endpoint = 'standard-default'
             }
 
-            axios.post('http://localhost:8000/' + endpoint,data,{
+            axios.post(config.frontendUrl + endpoint,data,{
             headers: {
             'Content-Type': 'multipart/form-data'
             }
