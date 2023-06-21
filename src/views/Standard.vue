@@ -175,11 +175,13 @@
 
 <script>
 import axios from 'axios'
-import config from '../../config.json'
+import config from "./config.json"
 
 export default {
     data () {
         return {
+            config: config,
+
             cycle:90,
             iv:2,
             ig_mode:true,
@@ -313,7 +315,7 @@ export default {
                 endpoint = 'standard-default'
             }
 
-            axios.post(config.frontendUrl + endpoint,data,{
+            axios.post(this.config.backendUrl + endpoint,data,{
             headers: {
             'Content-Type': 'multipart/form-data'
             }
