@@ -224,10 +224,9 @@
       </div>
   
       <div class="next" ref="bottomElement">
-          <!-- <router-link :to="{ name : 'result'}">
+          <router-link :to="{ name : 'result'}">
               <button class="nextstep" @click="callAPI" id="submit">Submit</button>
-          </router-link> -->
-          <button class="nextstep" @click="callAPI" id="submit">Submit</button>
+          </router-link>
       </div>
      
   </div>
