@@ -236,7 +236,8 @@
   
   <script>
   import axios from 'axios'
-  import config from './config.json'
+  import config from "./config.json"
+  
   
   export default {
       data () {
@@ -370,14 +371,8 @@
               } else {
                   endpoint = 'advanced-default'
               }
-            
-              // Fetch json file to get url
-              axios.get('./config.json')
-                .then(response => {
-                    const config = response.data
-                })
   
-              axios.post(this.config.frontendUrl + endpoint,data,{
+              axios.post(this.config.backendUrl + endpoint,data,{
               headers: {
               'Content-Type': 'multipart/form-data'
               }
