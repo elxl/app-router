@@ -41,14 +41,14 @@
             <input type="text" class="n-combine" id="combn" v-model="ncomb" placeholder="eg:22,24">
         </div>
         <div>
-            <input type="text" class="n-flow" id="flow26" v-model="f26">
-            <input type="text" class="n-flow" id="flow24" v-model="f24">
-            <input type="text" class="n-flow" id="flow22" v-model="f22">
+            <input type="text" class="n-flow" id="flow26" v-model="f26" :disabled="!check26">
+            <input type="text" class="n-flow" id="flow24" v-model="f24" :disabled="!check24">
+            <input type="text" class="n-flow" id="flow22" v-model="f22" :disabled="!check22">
         </div>
         <div>
-            <input type="checkbox" class="n-contain" id="contain26" value="26" v-model="checkedbox">
-            <input type="checkbox" class="n-contain" id="contain24" value="24" v-model="checkedbox">
-            <input type="checkbox" class="n-contain" id="contain22" value="22" v-model="checkedbox">
+            <input type="checkbox" class="n-contain" id="contain26" value="26" v-model="check26" @click="togglebox($event.target.value)">
+            <input type="checkbox" class="n-contain" id="contain24" value="24" v-model="check24" @click="togglebox($event.target.value)">
+            <input type="checkbox" class="n-contain" id="contain22" value="22" v-model="check22" @click="togglebox($event.target.value)">
         </div>
     </div>
     <div>
@@ -58,46 +58,46 @@
             <input type="text" class="w-combine" id="combw" v-model="wcomb" placeholder="eg:32,34">
         </div>
         <div>
-            <input type="text" class="w-flow" id="flow32" v-model="f32"><br>
-            <input type="text" class="w-flow" id="flow34" v-model="f34"><br>
-            <input type="text" class="w-flow" id="flow36" v-model="f36">
+            <input type="text" class="w-flow" id="flow32" v-model="f32" :disabled="!check32"><br>
+            <input type="text" class="w-flow" id="flow34" v-model="f34" :disabled="!check34"><br>
+            <input type="text" class="w-flow" id="flow36" v-model="f36" :disabled="!check36">
         </div>
         <div>
-            <input type="checkbox" class="w-contain" id="contain32" value="32" v-model="checkedbox"><br>
-            <input type="checkbox" class="w-contain" id="contain34" value="34" v-model="checkedbox"><br>
-            <input type="checkbox" class="w-contain" id="contain36" value="36" v-model="checkedbox">
+            <input type="checkbox" class="w-contain" id="contain32" value="32" v-model="check32" @click="togglebox($event.target.value)"><br>
+            <input type="checkbox" class="w-contain" id="contain34" value="34" v-model="check34" @click="togglebox($event.target.value)"><br>
+            <input type="checkbox" class="w-contain" id="contain36" value="36" v-model="check36" @click="togglebox($event.target.value)">
         </div>
     </div>
     <div style="position: relative;">
         <img class="standard-fig" src="../assets/standard.png">
         <div style="position: absolute;top: 30%;left: 40%;">
-            <input type="checkbox" class="n-contain" id="ped42" value="42" v-model="checkedped">
-            <input type="text" class="n-flow" id="width42" v-model="w42" :style="w42 ? 'background-color: white;' : 'background-color: transparent;'">
+            <input type="checkbox" class="n-contain" id="ped42" value="42" v-model="check42" @click="toggleped($event.target.value)">
+            <input type="text" class="n-flow" id="width42" v-model="w42" :disabled="!check42" :style="w42 ? 'background-color: white;' : 'background-color: transparent;'">
         </div>
         <div style="position: absolute;top: 40%;right: 30%">
-            <input type="checkbox" class="e-contain" id="ped41" value="41" v-model="checkedped"><br>
-            <input type="text" class="e-flow" id="width41" v-model="w41" :style="w41 ? 'background-color: white;' : 'background-color: transparent;'">
+            <input type="checkbox" class="e-contain" id="ped41" value="41" v-model="check41" @click="toggleped($event.target.value)"><br>
+            <input type="text" class="e-flow" id="width41" v-model="w41" :disabled="!check41" :style="w41 ? 'background-color: white;' : 'background-color: transparent;'">
         </div>
         <div style="position: absolute;top: 65%;left: 40%;">
-            <input type="checkbox" class="s-contain" id="ped40" value="40" v-model="checkedped">
-            <input type="text" class="s-flow" id="width40" v-model="w40" :style="w40 ? 'background-color: white;' : 'background-color: transparent;'">
+            <input type="checkbox" class="s-contain" id="ped40" value="40" v-model="check40" @click="toggleped($event.target.value)">
+            <input type="text" class="s-flow" id="width40" v-model="w40" :disabled="!check40" :style="w40 ? 'background-color: white;' : 'background-color: transparent;'">
         </div>
         <div style="position: absolute;top: 40%;right: 60%;">
-            <input type="checkbox" class="w-contain" id="ped43" value="43" v-model="checkedped"><br>
-            <input type="text" class="w-flow" id="width43" v-model="w43" :style="w43 ? 'background-color: white;' : 'background-color: transparent;'">
+            <input type="checkbox" class="w-contain" id="ped43" value="43" v-model="check43" @click="toggleped($event.target.value)"><br>
+            <input type="text" class="w-flow" id="width43" v-model="w43" :disabled="!check43" :style="w43 ? 'background-color: white;' : 'background-color: transparent;'">
         </div>
     </div>
     <div class="east">
         <div>
-            <input type="checkbox" class="e-contain" id="contain12" value="12" v-model="checkedbox"><br>
-            <input type="checkbox" class="e-contain" id="contain14" value="14" v-model="checkedbox"><br>
-            <input type="checkbox" class="e-contain" id="contain16" value="16" v-model="checkedbox">
+            <input type="checkbox" class="e-contain" id="contain16" value="16" v-model="check16" @click="togglebox($event.target.value)"><br>
+            <input type="checkbox" class="e-contain" id="contain14" value="14" v-model="check14" @click="togglebox($event.target.value)"><br>
+            <input type="checkbox" class="e-contain" id="contain12" value="12" v-model="check12" @click="togglebox($event.target.value)">
         </div>
 
         <div>
-            <input type="text" class="e-flow" id="flow16" v-model="f16"><br>
-            <input type="text" class="e-flow" id="flow14" v-model="f14"><br>
-            <input type="text" class="e-flow" id="flow12" v-model="f12">
+            <input type="text" class="e-flow" id="flow16" v-model="f16" :disabled="!check16"><br>
+            <input type="text" class="e-flow" id="flow14" v-model="f14" :disabled="!check14"><br>
+            <input type="text" class="e-flow" id="flow12" v-model="f12" :disabled="!check12">
         </div>
         <div>
             <input type="text" class="e-combine" id="combe" v-model="ecomb" placeholder="eg:12,14">
@@ -107,14 +107,14 @@
     </div>
     <div class="south">
         <div>
-            <input type="checkbox" class="s-contain" id="contain2" value="2" v-model="checkedbox">
-            <input type="checkbox" class="s-contain" id="contain4" value="4" v-model="checkedbox">
-            <input type="checkbox" class="s-contain" id="contain6" value="6" v-model="checkedbox">
+            <input type="checkbox" class="s-contain" id="contain2" value="2" v-model="check2" @click="togglebox($event.target.value)">
+            <input type="checkbox" class="s-contain" id="contain4" value="4" v-model="check4" @click="togglebox($event.target.value)">
+            <input type="checkbox" class="s-contain" id="contain6" value="6" v-model="check6" @click="togglebox($event.target.value)">
         </div>
         <div>
-            <input type="text" class="s-flow" id="flow2" v-model="f2">
-            <input type="text" class="s-flow" id="flow4" v-model="f4">
-            <input type="text" class="s-flow" id="flow6" v-model="f6">
+            <input type="text" class="s-flow" id="flow2" v-model="f2" :disabled="!check2">
+            <input type="text" class="s-flow" id="flow4" v-model="f4" :disabled="!check4">
+            <input type="text" class="s-flow" id="flow6" v-model="f6" :disabled="!check6">
         </div>
         <div>
             <input type="text" class="s-combine" id="combs" v-model="scomb" placeholder="eg:2,4">
@@ -164,9 +164,10 @@
     </div>
 
     <div class="next" ref="bottomElement">
-        <router-link :to="{ name : 'result'}">
+        <!-- <router-link :to="{ name : 'result'}">
             <button class="nextstep" @click="callAPI" id="submit">Submit</button>
-        </router-link>
+        </router-link> -->
+        <button class="nextstep" @click="validateData" id="submit">Submit</button>
     </div>
    
 </div>
@@ -207,10 +208,26 @@ export default {
             f32:'',
             f34:'',
             f36:'',
+            check2: false,
+            check4: false,
+            check6: false,
+            check12: false,
+            check14: false,
+            check16: false,
+            check22: false,
+            check24: false,
+            check26: false,
+            check32: false,
+            check34: false,
+            check36: false,          
             w40:'',
             w41:'',
             w42:'',
             w43:'',
+            check40: false,
+            check41: false,
+            check42: false,
+            check43: false,
 
             process:false,
             nameofmvt: {},
@@ -223,12 +240,57 @@ export default {
         }
     },
     methods: {
+        togglebox(value) {
+            // append value to checked box if not exist and remove it otherwise
+            if (this['check'+value]) {
+                const index = this.checkedbox.indexOf(value);
+                if (index !== -1) {
+                    this.checkedbox.splice(index, 1);
+                }
+                this['f'+value] = ''
+            } else {
+                this.checkedbox.push(value);
+            }
+        this['check'+value] = !this['check'+value];
+        },
+        toggleped(value) {
+            // append value to checked box if not exist and remove it otherwise
+            if (this['check'+value]) {
+                const index = this.checkedped.indexOf(value);
+                if (index !== -1) {
+                    this.checkedped.splice(index, 1);
+                }
+                this['w'+value] = ''
+            } else {
+                this.checkedped.push(value);
+            }
+        this['check'+value] = !this['check'+value];
+        },
         handleFileUpload(event) {
             this.file = event.target.files[0]
         },
-        preprocess(event) {     
-            // Clear name
+        preprocess(event) {
+            // Check if all inputs are valid
+            const regex = /^-?\d+$/; // Regular expression to match integers
+
+            for (const value of this.checkedbox) {
+                if (!regex.test(this['f'+value])) {
+                    this.process = false
+                    alert("Please enter valid integers in all textboxes!");
+                    return; // Exit the method if any non-integer value is found
+                }
+            }
+            for (const value of this.checkedped) {
+                if (!regex.test(this['w'+value])) {
+                    this.process = false
+                    alert("Please enter valid integers in all textboxes!");
+                    return; // Exit the method if any non-integer value is found
+                }
+            }
+
+            // Clear name and authorized conflict
             this.nameofmvt = {}
+            this.authorize = null
             // Get base information of the intersection
 
             let compose = {};
@@ -292,7 +354,41 @@ export default {
 
         },
 
-        callAPI() {
+        validateData() {
+            // Check if input is all valid
+            // Check unique input names
+            const names = Object.values(this.nameofmvt);
+            const uniqueNames = new Set(names);
+
+            if (names.length !== uniqueNames.size) {
+                alert("Please make sure all names are different!");
+                return; 
+            }
+
+            // Check secondary conflict
+            if (this.authorize !== null){
+                const values = this.authorize.split(/[,;]/);
+                const allValuesExist = values.every(value => names.includes(value.trim()));
+                if (!allValuesExist) {
+                alert("Movements in authorized conflict not included!");
+                return; 
+            }
+            }
+
+            // Check file name
+            if (this.savepath === null) {
+                alert("Please provide result file name!");
+                return; 
+            }  
+
+            // Call API
+            this.callAPI()
+
+            // Navigate to result page
+            this.$router.push({ name: "result" });
+        },
+
+        callAPI() {          
 
             const data = new FormData();
             // Append data properties to the FormData object
