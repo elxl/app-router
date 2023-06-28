@@ -27,7 +27,7 @@
 
 .config-grid {
     display: grid;
-    grid-template-columns: 0.3fr 0.4fr 0.3fr;
+    grid-template-columns: 0.5fr 750px 0.5fr;
     column-gap: 0px;
     row-gap: 0px;
   }
