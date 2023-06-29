@@ -41,9 +41,9 @@
             <input type="text" class="n-combine" id="combn" v-model="ncomb" placeholder="eg:22,24">
         </div>
         <div>
-            <input type="text" class="n-flow" id="flow26" v-model="f26" :disabled="!check26">
-            <input type="text" class="n-flow" id="flow24" v-model="f24" :disabled="!check24">
-            <input type="text" class="n-flow" id="flow22" v-model="f22" :disabled="!check22">
+            <input type="text" class="n-flow" id="flow26" v-model="f26" :disabled="!check26" placeholder="veh">
+            <input type="text" class="n-flow" id="flow24" v-model="f24" :disabled="!check24" placeholder="veh">
+            <input type="text" class="n-flow" id="flow22" v-model="f22" :disabled="!check22" placeholder="veh">
         </div>
         <div>
             <input type="checkbox" class="n-contain" id="contain26" value="26" v-model="check26" @click="togglebox($event.target.value)">
@@ -58,9 +58,9 @@
             <input type="text" class="w-combine" id="combw" v-model="wcomb" placeholder="eg:32,34">
         </div>
         <div>
-            <input type="text" class="w-flow" id="flow32" v-model="f32" :disabled="!check32"><br>
-            <input type="text" class="w-flow" id="flow34" v-model="f34" :disabled="!check34"><br>
-            <input type="text" class="w-flow" id="flow36" v-model="f36" :disabled="!check36">
+            <input type="text" class="w-flow" id="flow32" v-model="f32" :disabled="!check32" placeholder="veh"><br>
+            <input type="text" class="w-flow" id="flow34" v-model="f34" :disabled="!check34" placeholder="veh"><br>
+            <input type="text" class="w-flow" id="flow36" v-model="f36" :disabled="!check36" placeholder="veh">
         </div>
         <div>
             <input type="checkbox" class="w-contain" id="contain32" value="32" v-model="check32" @click="togglebox($event.target.value)"><br>
@@ -72,19 +72,19 @@
         <img class="standard-fig" src="../assets/standard.png">
         <div style="position: absolute;top: 30%;left: 40%;">
             <input type="checkbox" class="n-contain" id="ped42" value="42" v-model="check42" @click="toggleped($event.target.value)">
-            <input type="text" class="n-flow" id="width42" v-model="w42" :disabled="!check42" :style="w42 ? 'background-color: white;' : 'background-color: transparent;'">
+            <input type="text" class="n-flow" id="width42" v-model="w42" :disabled="!check42" :style="w42 ? 'background-color: white;' : 'background-color: transparent;'">m
         </div>
         <div style="position: absolute;top: 40%;right: 30%">
             <input type="checkbox" class="e-contain" id="ped41" value="41" v-model="check41" @click="toggleped($event.target.value)"><br>
-            <input type="text" class="e-flow" id="width41" v-model="w41" :disabled="!check41" :style="w41 ? 'background-color: white;' : 'background-color: transparent;'">
+            <input type="text" class="e-flow" id="width41" v-model="w41" :disabled="!check41" :style="w41 ? 'background-color: white;' : 'background-color: transparent;'">m
         </div>
         <div style="position: absolute;top: 65%;left: 40%;">
             <input type="checkbox" class="s-contain" id="ped40" value="40" v-model="check40" @click="toggleped($event.target.value)">
-            <input type="text" class="s-flow" id="width40" v-model="w40" :disabled="!check40" :style="w40 ? 'background-color: white;' : 'background-color: transparent;'">
+            <input type="text" class="s-flow" id="width40" v-model="w40" :disabled="!check40" :style="w40 ? 'background-color: white;' : 'background-color: transparent;'">m
         </div>
         <div style="position: absolute;top: 40%;right: 60%;">
             <input type="checkbox" class="w-contain" id="ped43" value="43" v-model="check43" @click="toggleped($event.target.value)"><br>
-            <input type="text" class="w-flow" id="width43" v-model="w43" :disabled="!check43" :style="w43 ? 'background-color: white;' : 'background-color: transparent;'">
+            <input type="text" class="w-flow" id="width43" v-model="w43" :disabled="!check43" :style="w43 ? 'background-color: white;' : 'background-color: transparent;'">m
         </div>
     </div>
     <div class="east">
@@ -95,9 +95,9 @@
         </div>
 
         <div>
-            <input type="text" class="e-flow" id="flow16" v-model="f16" :disabled="!check16"><br>
-            <input type="text" class="e-flow" id="flow14" v-model="f14" :disabled="!check14"><br>
-            <input type="text" class="e-flow" id="flow12" v-model="f12" :disabled="!check12">
+            <input type="text" class="e-flow" id="flow16" v-model="f16" :disabled="!check16" placeholder="veh"><br>
+            <input type="text" class="e-flow" id="flow14" v-model="f14" :disabled="!check14" placeholder="veh"><br>
+            <input type="text" class="e-flow" id="flow12" v-model="f12" :disabled="!check12" placeholder="veh">
         </div>
         <div>
             <input type="text" class="e-combine" id="combe" v-model="ecomb" placeholder="eg:12,14">
@@ -112,9 +112,9 @@
             <input type="checkbox" class="s-contain" id="contain6" value="6" v-model="check6" @click="togglebox($event.target.value)">
         </div>
         <div>
-            <input type="text" class="s-flow" id="flow2" v-model="f2" :disabled="!check2">
-            <input type="text" class="s-flow" id="flow4" v-model="f4" :disabled="!check4">
-            <input type="text" class="s-flow" id="flow6" v-model="f6" :disabled="!check6">
+            <input type="text" class="s-flow" id="flow2" v-model="f2" :disabled="!check2" placeholder="veh">
+            <input type="text" class="s-flow" id="flow4" v-model="f4" :disabled="!check4" placeholder="veh">
+            <input type="text" class="s-flow" id="flow6" v-model="f6" :disabled="!check6" placeholder="veh">
         </div>
         <div>
             <input type="text" class="s-combine" id="combs" v-model="scomb" placeholder="eg:2,4">
@@ -258,7 +258,7 @@ export default {
         this['check'+value] = !this['check'+value];
         },
         toggleped(value) {
-            // append value to checked box if not exist and remove it otherwise
+            // append value to checked pedestrian if not exist and remove it otherwise
             if (this['check'+value]) {
                 const index = this.checkedped.indexOf(value);
                 if (index !== -1) {
@@ -273,6 +273,7 @@ export default {
         handleFileUpload(event) {
             this.file = event.target.files[0]
         },
+        // Validate inputs
         validateInput() {
             // Check if all flows and widths are integers
             const regex = /^-?\d+$/; // Regular expression to match integers
@@ -295,10 +296,8 @@ export default {
             // Check if the combination only contains the flow ticked
             let lists = ['s','e','n','w']
             for (const branch of lists){
-                let includedNumbers = this.checkedbox.filter(element => this[branch + 'list'].includes(element));
-                let numbers = includedNumbers.join(',');
-                let regex_comb = new RegExp(`^(${numbers})(?:[,;]${numbers})*$`);
-
+                let includedNumbers = this.checkedbox.filter(element => this[branch + 'list'].includes(parseInt(element)));
+                let regex_comb = new RegExp(`^(${includedNumbers.join('|')}|,|;)+$`);
                 if (this[branch + 'comb']!=='' && !regex_comb.test(this[branch + 'comb'])) {
                     alert('Unselected movement included in the combination!');
                     return;
@@ -309,6 +308,7 @@ export default {
             this.preprocess()
 
         },
+        // Preprocess input
         preprocess() {
 
             // Clear name and authorized conflict
@@ -365,6 +365,14 @@ export default {
             // Sort list
             mvt.sort((a, b) => (typeof a === 'number' ? a : a[0]) - (typeof b === 'number' ? b : b[0]));
             this.mvt = mvt
+            // Set default names
+            mvt.forEach((combine, index) => {
+                if (typeof combine === 'number' && combine >= 40) {
+                this.nameofmvt[combine] =  'P' + (index+1);
+                } else {
+                    this.nameofmvt[combine] =  'V' + (index+1);
+                }
+            });
             
             // Show name component
             this.process = true
@@ -410,6 +418,7 @@ export default {
             // Navigate to result page
             this.$router.push({ name: "result" });
         },
+
 
         callAPI() {          
 
