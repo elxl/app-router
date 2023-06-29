@@ -126,7 +126,7 @@
 </div>
 
 <div class="next">
-    <button class="nextstep" @click="preprocess">Next</button>
+    <button class="nextstep" @click="validateInput">Next</button>
 </div>
 
 <div v-if="process">
@@ -196,6 +196,10 @@ export default {
             ecomb:'',
             ncomb:'',
             wcomb:'',
+            slist: [2,4,6],
+            elist: [12,14,16],
+            nlist: [22,24,26],
+            wlist: [32,34,36],
             f2:'',
             f4:'',
             f6:'',
@@ -269,8 +273,8 @@ export default {
         handleFileUpload(event) {
             this.file = event.target.files[0]
         },
-        preprocess(event) {
-            // Check if all inputs are valid
+        validateInput() {
+            // Check if all flows and widths are integers
             const regex = /^-?\d+$/; // Regular expression to match integers
 
             for (const value of this.checkedbox) {
@@ -287,6 +291,25 @@ export default {
                     return; // Exit the method if any non-integer value is found
                 }
             }
+
+            // Check if the combination only contains the flow ticked
+            let lists = ['s','e','n','w']
+            for (const branch of lists){
+                let includedNumbers = this.checkedbox.filter(element => this[branch + 'list'].includes(element));
+                let numbers = includedNumbers.join(',');
+                let regex_comb = new RegExp(`^(${numbers})(?:[,;]${numbers})*$`);
+
+                if (this[branch + 'comb']!=='' && !regex_comb.test(this[branch + 'comb'])) {
+                    alert('Unselected movement included in the combination!');
+                    return;
+                }
+            }
+
+            // Process valid inputs
+            this.preprocess()
+
+        },
+        preprocess() {
 
             // Clear name and authorized conflict
             this.nameofmvt = {}

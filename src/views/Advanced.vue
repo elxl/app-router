@@ -261,6 +261,10 @@
               w41:'',
               w42:'',
               w43:'',
+              check40: false,
+              check41: false,
+              check42: false,
+              check43: false,
   
               process:false,
               nameofmvt: {},
@@ -275,9 +279,36 @@
       created() {
           for (let i = 0; i <= 40; i++) {
             this['f' + i] = '';
+            this['check' + i] = false;
           }
           },
       methods: {
+            togglebox(value) {
+                // append value to checked box if not exist and remove it otherwise
+                if (this['check'+value]) {
+                    const index = this.checkedbox.indexOf(value);
+                    if (index !== -1) {
+                        this.checkedbox.splice(index, 1);
+                    }
+                    this['f'+value] = ''
+                } else {
+                    this.checkedbox.push(value);
+                }
+            this['check'+value] = !this['check'+value];
+            },
+            toggleped(value) {
+                // append value to checked box if not exist and remove it otherwise
+                if (this['check'+value]) {
+                    const index = this.checkedped.indexOf(value);
+                    if (index !== -1) {
+                        this.checkedped.splice(index, 1);
+                    }
+                    this['w'+value] = ''
+                } else {
+                    this.checkedped.push(value);
+                }
+            this['check'+value] = !this['check'+value];
+            },
           handleFileUpload(event) {
               this.file = event.target.files[0]
           },
