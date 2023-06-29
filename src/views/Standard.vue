@@ -7,14 +7,14 @@
             <input type="text" class="input-text" id="cycle" v-model="cycle">s
         </div>
         <div class="meta-data">
-            <label for="iv">Inter vehicle time:</label>
+            <label for="iv">Temps intervéhiculaire :</label>
             <input type="text" class="input-text" id="iv" v-model="iv">s/veh
         </div>
         <div class="meta-data">
-            <label for="ig">Inter green time:</label>
-                <input type="radio" id="default" name="speedig" value="true" v-model="ig_mode"> Default:
+            <label for="ig">Temps intervert:</label>
+                <input type="radio" id="default" name="speedig" value="true" v-model="ig_mode"> Défaut:
                 <input type="text" class="input-text" name="ig" v-model="ig">s
-                <input type="radio" id="upload" name="speedig" value="false" v-model="ig_mode"> Upload
+                <input type="radio" id="upload" name="speedig" value="false" v-model="ig_mode"> Télécharger
                 <div v-if="ig_mode=='false'" style="display: inline;">
                     <input type="file" id="file" name="filename" @change="handleFileUpload">
                 </div>
@@ -23,11 +23,11 @@
 
     <div class="input-second">
         <div class="meta-data">
-            <label for="speed">Speed of pedestrian:</label>
+            <label for="speed">Vitesse du piéton:</label>
             <input type="text" class="input-text" name="speed" v-model="speedped">m/s
         </div>
         <div class="meta-data">
-            <label for="speedig">Speed of pedestrain for inter green:</label>
+            <label for="speedig">Vitesse du piéton pour temps intervert:</label>
             <input type="text" class="input-text" name="speedig" v-model="speedpedig">m/s
         </div>
     </div>
@@ -126,12 +126,12 @@
 </div>
 
 <div class="next">
-    <button class="nextstep" @click="validateInput">Next</button>
+    <button class="nextstep" @click="validateInput">Suivant</button>
 </div>
 
 <div v-if="process">
     <div class="next-title">
-        <h2 >Name of movement and calculation details</h2>
+        <h2 >Nom du mouvement et détails du calcul</h2>
     </div>
     <div style="display: flex;align-items: center; justify-content: center;">
         <div class="name-container">
@@ -144,21 +144,21 @@
     </div>
 
     <div>
-        <label for="secondary">Authorized conflict:</label>
+        <label for="secondary">Conflit autorisé:</label>
         <input type="text" class="authorize" id="secondary" placeholder="eg:V1,V2;P5,V4" v-model="authorize">
     </div>
 
     <div class="details">
         <label class="checkbox">
         <input type="checkbox" v-model="opt">
-        Green optimization
+        Optimisation du temps vert
         </label>
         <label class="checkbox">
         <input type="checkbox" v-model="conflict">
-        Conflict critical movement
+        Mouvements déterminants en conflits
         </label>
         <label for="savefile" class="checkbox">    
-        Filename:
+        Nom de fichier:
         <input type="text" id="savefile" placeholder="example.pdf" v-model="savepath">
         </label>
     </div>
@@ -167,7 +167,7 @@
         <!-- <router-link :to="{ name : 'result'}">
             <button class="nextstep" @click="callAPI" id="submit">Submit</button>
         </router-link> -->
-        <button class="nextstep" @click="validateData" id="submit">Submit</button>
+        <button class="nextstep" @click="validateData" id="submit">Calculer</button>
     </div>
    
 </div>
@@ -281,14 +281,14 @@ export default {
             for (const value of this.checkedbox) {
                 if (!regex.test(this['f'+value])) {
                     this.process = false
-                    alert("Please enter valid integers in all textboxes!");
+                    alert("Veuillez saisir des nombres valides dans toutes les zones de texte du flux!");
                     return; // Exit the method if any non-integer value is found
                 }
             }
             for (const value of this.checkedped) {
                 if (!regex.test(this['w'+value])) {
                     this.process = false
-                    alert("Please enter valid integers in all textboxes!");
+                    alert("Veuillez saisir des nombres valides dans toutes les zones de texte du longeur!");
                     return; // Exit the method if any non-integer value is found
                 }
             }
@@ -299,7 +299,7 @@ export default {
                 let includedNumbers = this.checkedbox.filter(element => this[branch + 'list'].includes(parseInt(element)));
                 let regex_comb = new RegExp(`^(${includedNumbers.join('|')}|,|;)+$`);
                 if (this[branch + 'comb']!=='' && !regex_comb.test(this[branch + 'comb'])) {
-                    alert('Unselected movement included in the combination!');
+                    alert('Mouvement non sélectionné inclus dans la combinaison!');
                     return;
                 }
             }
@@ -392,7 +392,7 @@ export default {
             const uniqueNames = new Set(names);
 
             if (names.length !== uniqueNames.size) {
-                alert("Please make sure all names are different!");
+                alert("Veillez à ce que tous les noms du mouvement soient différents!");
                 return; 
             }
 
@@ -401,16 +401,20 @@ export default {
                 const values = this.authorize.split(/[,;]/);
                 const allValuesExist = values.every(value => names.includes(value.trim()));
                 if (!allValuesExist) {
-                alert("Movements in authorized conflict not included!");
+                alert("Les mouvements dans les conflits autorisés ne sont pas inclus!");
                 return; 
             }
             }
 
             // Check file name
             if (this.savepath === null) {
-                alert("Please provide result file name!");
+                alert("Veuillez indiquer le nom du fichier!");
                 return; 
             }  
+            if (!this.savepath.endsWith(".pdf")) {
+                alert("Le nom de fichier doit se terminer par .pdf!");
+                return;                
+            }
 
             // Call API
             this.callAPI()

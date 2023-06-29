@@ -1,7 +1,7 @@
 <template>
   <nav v-if="showNav">
     <router-link :to="{name: 'standard'}">Standard</router-link> |
-    <router-link :to="{ name:'advance' }">Advanced</router-link>
+    <router-link :to="{ name:'advance' }">Avancé</router-link>
   </nav>
   <router-view/>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div class="message-container">
-    <h1 class="result-message">Work submitted successfully! Result will be sent to email when finish.</h1>
+    <h1 class="result-message">Le calcul a été soumis avec succès ! Le résultat sera envoyé par e-mail dès qu'il sera terminé.</h1>
   </div>
 </template>
 
