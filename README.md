@@ -1,5 +1,5 @@
 # CU calculation application web interface
-This is the front end for utilized capacity calculation. The code of the backend can be found in [this repository](https://CitecDigital@dev.azure.com/CitecDigital/Calcul%20capacit%C3%A9/_git/CU_backend).
+This is the front end for utilized capacity calculation. The code of the backend can be found in [this repository](https://dev.azure.com/CitecDigital/Calcul%20capacit%C3%A9/_git/CU_backend).
 
 ## Project setup
 ### Environment preparation
