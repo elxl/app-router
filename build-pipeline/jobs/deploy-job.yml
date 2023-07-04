@@ -1,0 +1,39 @@
+parameters:
+  
+  - name: serviceConnection
+    type: string
+  - name: azureResourceGroup
+    type: string
+  - name: myappname
+    type: string
+  - name: containerRegistry
+    type: string
+  - name: containerRepositories
+    type: string
+  - name: slotname
+    type: string
+  - name: appsettings
+    type: object
+    default: '{}'
+  - name: myenv
+    type: string
+
+steps:
+- task: AzureWebAppContainer@1
+  name: WebappOutput
+  displayName: Deploy Web App to existing slot
+  inputs:
+    azureSubscription: ${{ parameters.serviceConnection }}
+    appName: ${{ parameters.myappname }}
+    deployToSlotOrASE: true
+    resourceGroupName: ${{ parameters.azureResourceGroup }}
+    slotName: ${{ parameters.slotname }}
+    containers: ${{ parameters.containerRegistry }}.azurecr.io/${{ parameters.containerRepositories }}:${{ parameters.myenv }}-latest
+- task: AzureAppServiceSettings@1
+  condition: and(ne(variables['appsettings'], '{}'), eq(variables['Build.SourceBranchName'], 'main'))
+  inputs:
+    azureSubscription: ${{ parameters.serviceConnection }}
+    appName: ${{ parameters.myappname }}
+    resourceGroupName: ${{ parameters.azureResourceGroup }}
+    slotName: ${{ parameters.slotname }}
+    appSettings: ${{ parameters.appsettings }}'

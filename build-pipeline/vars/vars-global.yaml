@@ -1,0 +1,8 @@
+variables:
+  serviceConnection: "subscription-ServiceConnection-Calcul capacité"
+  azureResourceGroup: abilytics-rg
+  containerRegistry: "abilytics"
+  containerRepositories: "abilytics-cu-frontend"
+  dockerfile: "frontend.dockerfile"
+  pmcollectionName: ""
+  RunIntegrationTest: "false"

@@ -1,0 +1,6 @@
+variables:
+  myenv: "dev"
+  myappname: "abilytics-cu-frontend-dev"
+  pmEnvironmentName: ""
+  SecretAuthCredentials: ""
+  slotname: "production"
