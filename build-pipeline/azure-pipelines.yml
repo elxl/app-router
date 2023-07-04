@@ -1,0 +1,96 @@
+pool:
+  vmImage: ubuntu-latest
+trigger:
+  batch: true
+  branches:
+    include:
+      - main
+      - staging
+      - development
+      - dev
+variables:
+  - template: vars/vars-global.yaml
+  - name: env
+    ${{ if eq(variables['Build.SourceBranchName'], 'main') }}:
+      value: prod
+    ${{ elseif eq(variables['Build.SourceBranchName'], 'staging') }}:
+      value: staging
+    ${{ elseif eq(variables['Build.SourceBranchName'], 'development') }} || ${{ eq(variables['Build.SourceBranchName'], 'dev') }}:
+      value: dev
+    ${{ else }}:
+      value: dev
+  - template: vars/vars-${{ variables.env }}.yaml
+
+stages:
+  - stage: BuildStage
+    jobs:
+      - job: BuildJob
+        steps:
+          - template: jobs/build-job.yml
+            parameters:
+              containerRegistry: $(containerRegistry)
+              containerRepositories: $(containerRepositories)
+              myenv: $(myenv)
+              dockerfile: $(dockerfile)
+
+
+  - stage: DeployStage
+    dependsOn: BuildStage
+
+    jobs:
+      - job: DeployJob
+        variables:
+          myversion: $[ stageDependencies.BuildStage.BuildJob.outputs['getParsedVars.myversion'] ]
+        steps:
+          - template: jobs/deploy-job.yml
+            parameters:
+              serviceConnection: $(serviceConnection)
+              azureResourceGroup: $(azureResourceGroup)
+              myappname: $(myappname)
+              containerRegistry: $(containerRegistry)
+              containerRepositories: $(containerRepositories)
+              slotname: $(slotname)
+              appsettings: $(appsettings)
+              myenv: $(myenv)
+  - stage: IntegrationTestStage
+    dependsOn: DeployStage
+    condition: eq(variables['RunIntegrationTest'], true)
+    jobs:
+      - job: IntegrationTestJob
+        variables:
+          WebappURL: $[ stageDependencies.DeployStage.DeployJob.outputs['WebappOutput.AppServiceApplicationUrl'] ]
+        steps:
+          - template: jobs/integration-test-job.yml
+            parameters:
+              RunIntegrationTest: $(RunIntegrationTest)
+              SecretAuthCredentials: $(SecretAuthCredentials)
+              pmEnvironmentName: $(pmEnvironmentName)
+              pmcollectionName: $(pmcollectionName)
+              WebappURL: $(WebappURL)
+
+  - stage: DeployToproductionStage
+    dependsOn: IntegrationTestStage
+    condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/main'))
+    jobs:
+      - job: waitForValidation
+        displayName: Wait for external validation
+        pool: server
+        steps:
+          - task: ManualValidation@0
+            timeoutInMinutes: 1440 # task times out in 1 day
+            inputs:
+              notifyUsers: |
+                "mansour.sow@citec.ch"
+              instructions: "Please validate the deployment on production and resume"
+              onTimeout: "reject"
+      - job: deployToProductionJob
+        dependsOn: waitForValidation
+        steps:
+          - task: AzureAppServiceManage@0
+            displayName: Swap Slots
+            inputs:
+              action: Swap Slots
+              azureSubscription: $(serviceConnection)
+              resourceGroupName: $(azureResourceGroup)
+              webAppName: $(myappname)
+              SourceSlot: $(slotname)
