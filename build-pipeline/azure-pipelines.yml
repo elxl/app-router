@@ -6,8 +6,8 @@ trigger:
     include:
       - main
       - staging
-      - development
       - dev
+      - master
 variables:
   - template: vars/vars-global.yaml
   - name: env
@@ -15,7 +15,7 @@ variables:
       value: prod
     ${{ elseif eq(variables['Build.SourceBranchName'], 'staging') }}:
       value: staging
-    ${{ elseif eq(variables['Build.SourceBranchName'], 'development') }} || ${{ eq(variables['Build.SourceBranchName'], 'dev') }}:
+    ${{ elseif eq(variables['Build.SourceBranchName'], 'dev') }}:
       value: dev
     ${{ else }}:
       value: dev
