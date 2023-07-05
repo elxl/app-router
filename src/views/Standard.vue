@@ -159,7 +159,7 @@
         </label>
         <label for="savefile" class="checkbox">    
         Nom de fichier:
-        <input type="text" id="savefile" placeholder="example.pdf" v-model="savepath">
+        <input type="text" id="savefile" v-model="savepath">
         </label>
     </div>
 
@@ -411,10 +411,10 @@ export default {
                 alert("Veuillez indiquer le nom du fichier!");
                 return; 
             }  
-            if (!this.savepath.endsWith(".pdf")) {
-                alert("Le nom de fichier doit se terminer par .pdf!");
-                return;                
-            }
+            // if (!this.savepath.endsWith(".pdf")) {
+            //     alert("Le nom de fichier doit se terminer par .pdf!");
+            //     return;                
+            // }
 
             // Call API
             this.callAPI()
