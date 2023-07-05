@@ -7,14 +7,14 @@
               <input type="text" class="input-text" id="cycle" v-model="cycle">s
           </div>
           <div class="meta-data">
-              <label for="iv">Inter vehicle time:</label>
+              <label for="iv">Temps intervéhiculaire:</label>
               <input type="text" class="input-text" id="iv" v-model="iv">s/veh
           </div>
           <div class="meta-data">
-              <label for="ig">Inter green time:</label>
-                  <input type="radio" id="default" name="speedig" value="true" v-model="ig_mode"> Default:
+              <label for="ig">Temps intervert:</label>
+                  <input type="radio" id="default" name="speedig" value="true" v-model="ig_mode"> Défaut:
                   <input type="text" class="input-text" name="ig" v-model="ig">s
-                  <input type="radio" id="upload" name="speedig" value="false" v-model="ig_mode"> Upload
+                  <input type="radio" id="upload" name="speedig" value="false" v-model="ig_mode"> Télécharger
                   <div v-if="ig_mode=='false'" style="display: inline;">
                       <input type="file" id="file" name="filename" @change="handleFileUpload">
                   </div>
@@ -23,11 +23,11 @@
   
       <div class="input-second">
           <div class="meta-data">
-              <label for="speed">Speed of pedestrian:</label>
+              <label for="speed">Vitesse du piéton:</label>
               <input type="text" class="input-text" name="speed" v-model="speedped">m/s
           </div>
           <div class="meta-data">
-              <label for="speedig">Speed of pedestrain for inter green:</label>
+              <label for="speedig">Vitesse du piéton pour temps intervert:</label>
               <input type="text" class="input-text" name="speedig" v-model="speedpedig">m/s
           </div>
       </div>
@@ -179,19 +179,19 @@
       <div></div>
       <div></div>
       <div class="bus">
-      <label for="bus" style="font-size: 20px"><b>Bus lanes:</b></label>
+      <label for="bus" style="font-size: 20px"><b>Voies de bus:</b></label>
       <input type="text" id="bus" placeholder="eg:1;12;24;36" v-model="bus" style="margin-left: 5px;height: 30px;width: 150px;">
       </div>  
       <div></div>
   </div>
   
   <div class="next">
-      <button class="nextstep" @click="preprocess">Next</button>
+      <button class="nextstep" @click="preprocess">Suivant</button>
   </div>
   
   <div v-if="process">
       <div class="next-title">
-          <h2 >Name of movement and calculation details</h2>
+          <h2 >Nom du mouvement et détails du calcul</h2>
       </div>
       <div style="display: flex;align-items: center; justify-content: center;">
           <div class="name-container">
@@ -204,28 +204,28 @@
       </div>
   
       <div>
-          <label for="secondary">Authorized conflict:</label>
+          <label for="secondary">>Conflit autorisé:</label>
           <input type="text" class="authorize" id="secondary" placeholder="eg:V1,V2;P5,V4" v-model="authorize">
       </div>
   
       <div class="details">
           <label class="checkbox">
           <input type="checkbox" v-model="opt">
-          Green optimization
+          Optimisation du temps vert
           </label>
           <label class="checkbox">
           <input type="checkbox" v-model="conflict">
-          Conflict critical movement
+          Mouvements déterminants en conflits
           </label>
           <label for="savefile" class="checkbox">    
-          Filename:
+          Nom de fichier:
           <input type="text" id="savefile" placeholder="example.pdf" v-model="savepath">
           </label>
       </div>
   
       <div class="next" ref="bottomElement">
           <router-link :to="{ name : 'result'}">
-              <button class="nextstep" @click="callAPI" id="submit">Submit</button>
+              <button class="nextstep" @click="callAPI" id="submit">Calculer</button>
           </router-link>
       </div>
      

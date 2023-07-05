@@ -7,7 +7,7 @@
             <input type="text" class="input-text" id="cycle" v-model="cycle">s
         </div>
         <div class="meta-data">
-            <label for="iv">Temps intervéhiculaire :</label>
+            <label for="iv">Temps intervéhiculaire:</label>
             <input type="text" class="input-text" id="iv" v-model="iv">s/veh
         </div>
         <div class="meta-data">
