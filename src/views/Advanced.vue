@@ -219,7 +219,7 @@
           </label>
           <label for="savefile" class="checkbox">    
           Nom de fichier:
-          <input type="text" id="savefile" placeholder="example.pdf" v-model="savepath">
+          <input type="text" id="savefile" v-model="savepath">
           </label>
       </div>
   
