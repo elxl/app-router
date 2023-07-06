@@ -221,6 +221,10 @@
           Nom de fichier:
           <input type="text" id="savefile" v-model="savepath">
           </label>
+          <label for="email" class="checkbox">  
+          Email:
+          <input type="text" id="email" v-model="email">
+          </label>
       </div>
   
       <div class="next" ref="bottomElement">
@@ -274,6 +278,7 @@
               opt:false,
               conflict:false,
               savepath:null,
+              email:null,
           }
       },
       created() {
@@ -390,6 +395,7 @@
               data.append('opt',this.opt)
               data.append('conflict',this.conflict)
               data.append('savepath',this.savepath)
+              data.append('email',this.email)
               data.append('bus',this.bus)
   
               let endpoint = null

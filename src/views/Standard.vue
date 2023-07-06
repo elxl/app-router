@@ -161,6 +161,10 @@
         Nom de fichier:
         <input type="text" id="savefile" v-model="savepath">
         </label>
+        <label for="email" class="checkbox">    
+        Email:
+        <input type="text" id="email" v-model="email">
+        </label>
     </div>
 
     <div class="next" ref="bottomElement">
@@ -241,6 +245,7 @@ export default {
             opt:false,
             conflict:false,
             savepath:null,
+            email:null,
         }
     },
     methods: {
@@ -415,6 +420,11 @@ export default {
             //     alert("Le nom de fichier doit se terminer par .pdf!");
             //     return;                
             // }
+            // check email address
+            if (this.email === null) {
+                alert("Veuillez indiquer le l'adresse email!");
+                return; 
+            }            
 
             // Call API
             this.callAPI()
@@ -436,6 +446,7 @@ export default {
             data.append('opt',this.opt)
             data.append('conflict',this.conflict)
             data.append('savepath',this.savepath)
+            data.append('email',this.email)
 
             let endpoint = null
             if (this.ig_mode != true){
