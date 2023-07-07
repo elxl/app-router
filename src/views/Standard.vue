@@ -338,6 +338,7 @@ export default {
             let combined = [];
             function checkComb(comb, comp,combined) {
                 if (comb.length !==0){
+                    comb = comb.replace(/\s/g, "")
                     let listOfTuples = comb.split(';').map(tupleString => tupleString.split(',').map(Number));
                     for (let tuple of listOfTuples) {
                         if (tuple.length > 0) {
