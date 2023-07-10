@@ -1,7 +1,8 @@
 <template>
   <nav v-if="showNav">
     <router-link :to="{name: 'standard'}">Standard</router-link> |
-    <router-link :to="{ name:'advance' }">Avancé</router-link>
+    <router-link :to="{name:'advance' }">Avancé</router-link> |
+    <router-link :to="{name: 'giveway'}">Perte à priorité</router-link>
   </nav>
   <router-view/>
 </template>
