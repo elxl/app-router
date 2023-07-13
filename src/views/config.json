@@ -1,4 +1,4 @@
 {
-    "backendUrl": "https://abilytics-cu-backend-dev.azurewebsites.net/"
+    "backendUrl": "http://localhost:8000/"
 }
   

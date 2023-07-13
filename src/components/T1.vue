@@ -15,12 +15,50 @@
     </div>
     
     <div class="config-grid">
+        <div>
+        </div>
+        <div class="north">
+          <div style="margin-top: 30px;">
+                <input type="checkbox" id="combw" v-model="wcomb">2+3
+          </div>
+          <div>
+              <select v-model="wslope" style="margin-top: 10px;margin-bottom: 10px;">
+                <option value="4">4%</option>
+                <option value="2">2%</option>
+                <option value="0">0%</option>
+                <option value="-2">-2%</option>
+                <option value="-4">-4%</option>
+              </select>
+          </div>
+          <div v-if="flowtype === 'vhc'">
+                <input type="text" class="n-flow" id="flow3" v-model="f3" placeholder="vhc">
+                <input type="text" class="n-flow" id="flow2" v-model="f2" placeholder="vhc">
+            </div>
+            <div v-else-if="flowtype === 'uvp'">
+                <input type="text" class="n-flow" id="flow3" v-model="f3" placeholder="uvp">
+                <input type="text" class="n-flow" id="flow2" v-model="f2" placeholder="uvp">
+            </div>
+            <div v-else>
+                <input type="text" class="n-flow" id="flow31" v-model="f31" placeholder="voit">
+                <input type="text" class="n-flow" id="flow21" v-model="f21" placeholder="voit"><br>
+                <input type="text" class="n-flow" id="flow32" v-model="f32" placeholder="cam">
+                <input type="text" class="n-flow" id="flow22" v-model="f22" placeholder="cam"><br>
+                <input type="text" class="n-flow" id="flow33" v-model="f33" placeholder="TR">
+                <input type="text" class="n-flow" id="flow23" v-model="f23" placeholder="TR"><br>
+                <input type="text" class="n-flow" id="flow34" v-model="f34" placeholder="mot">
+                <input type="text" class="n-flow" id="flow24" v-model="f24" placeholder="mot"><br>
+                <input type="text" class="n-flow" id="flow35" v-model="f35" placeholder="vélo">
+                <input type="text" class="n-flow" id="flow25" v-model="f25" placeholder="vélo"><br>
+            </div>
+        </div>
+        <div>
+        </div>
         <div class="west">
             <div style="margin-right: 10px;">
-                <input type="checkbox" id="combw" v-model="wcomb">2+3
+                <input type="checkbox" id="combs" v-model="scomb">4+6
             </div>
             <div>
-              <select v-model="wslope" style="margin-right: 10px;">
+              <select v-model="sslope" style="margin-right: 10px;">
                 <option value="4">4%</option>
                 <option value="2">2%</option>
                 <option value="0">0%</option>
@@ -29,87 +67,54 @@
               </select>
             </div>
             <div v-if="flowtype === 'vhc'">
-                <input type="text" class="w-flow" id="flow2" v-model="f2" placeholder="vhc"><br>
-                <input type="text" class="w-flow" id="flow3" v-model="f3" placeholder="vhc">
+                <input type="text" class="w-flow" id="flow4" v-model="f4" placeholder="vhc"><br>
+                <input type="text" class="w-flow" id="flow6" v-model="f6" placeholder="vhc">
             </div>
             <div v-else-if="flowtype === 'uvp'">
-                <input type="text" class="w-flow" id="flow2" v-model="f2" placeholder="uvp"><br>
-                <input type="text" class="w-flow" id="flow3" v-model="f3" placeholder="uvp">
+                <input type="text" class="w-flow" id="flow4" v-model="f4" placeholder="uvp"><br>
+                <input type="text" class="w-flow" id="flow6" v-model="f6" placeholder="uvp">
             </div>
             <div v-else>
-                <input type="text" class="w-flow" id="flow21" v-model="f21" placeholder="voit">
-                <input type="text" class="w-flow" id="flow22" v-model="f22" placeholder="cam">
-                <input type="text" class="w-flow" id="flow23" v-model="f23" placeholder="TR">
-                <input type="text" class="w-flow" id="flow24" v-model="f24" placeholder="mot">
-                <input type="text" class="w-flow" id="flow25" v-model="f25" placeholder="vélo">
+                <input type="text" class="w-flow" id="flow41" v-model="f41" placeholder="voit">
+                <input type="text" class="w-flow" id="flow42" v-model="f42" placeholder="cam">
+                <input type="text" class="w-flow" id="flow43" v-model="f43" placeholder="TR">
+                <input type="text" class="w-flow" id="flow44" v-model="f44" placeholder="mot">
+                <input type="text" class="w-flow" id="flow45" v-model="f45" placeholder="vélo">
                 <br>
-                <input type="text" class="w-flow" id="flow31" v-model="f31" placeholder="voit">
-                <input type="text" class="w-flow" id="flow32" v-model="f32" placeholder="cam">
-                <input type="text" class="w-flow" id="flow33" v-model="f33" placeholder="TR">
-                <input type="text" class="w-flow" id="flow34" v-model="f34" placeholder="mot">
-                <input type="text" class="w-flow" id="flow35" v-model="f35" placeholder="vélo">
+                <input type="text" class="w-flow" id="flow61" v-model="f61" placeholder="voit">
+                <input type="text" class="w-flow" id="flow62" v-model="f62" placeholder="cam">
+                <input type="text" class="w-flow" id="flow63" v-model="f63" placeholder="TR">
+                <input type="text" class="w-flow" id="flow64" v-model="f64" placeholder="mot">
+                <input type="text" class="w-flow" id="flow65" v-model="f65" placeholder="vélo">
             </div>
         </div>
         <div style="position: relative;">
             <img class="standard-fig" src="../assets/T1_config.png">
         </div>
-        <div class="east">
-            <div v-if="flowtype === 'vhc'">
-                <input type="text" class="e-flow" id="flow7" v-model="f7" placeholder="vhc"><br>
-                <input type="text" class="e-flow" id="flow8" v-model="f8" placeholder="vhc">
-            </div>
-            <div v-else-if="flowtype === 'uvp'">
-                <input type="text" class="e-flow" id="flow7" v-model="f7" placeholder="uvp"><br>
-                <input type="text" class="e-flow" id="flow8" v-model="f8" placeholder="uvp">
-            </div>
-            <div v-else>
-                <input type="text" class="e-flow" id="flow71" v-model="f71" placeholder="voit">
-                <input type="text" class="e-flow" id="flow72" v-model="f72" placeholder="cam">
-                <input type="text" class="e-flow" id="flow73" v-model="f73" placeholder="TR">
-                <input type="text" class="e-flow" id="flow74" v-model="f74" placeholder="mot">
-                <input type="text" class="e-flow" id="flow75" v-model="f75" placeholder="vélo">
-                <br>
-                <input type="text" class="e-flow" id="flow81" v-model="f81" placeholder="voit">
-                <input type="text" class="e-flow" id="flow82" v-model="f82" placeholder="cam">
-                <input type="text" class="e-flow" id="flow83" v-model="f83" placeholder="TR">
-                <input type="text" class="e-flow" id="flow84" v-model="f84" placeholder="mot">
-                <input type="text" class="e-flow" id="flow85" v-model="f85" placeholder="vélo">
-            </div>
-            <div>
-              <select v-model="eslope" style="margin-right: 10px;">
-                <option value="4">4%</option>
-                <option value="2">2%</option>
-                <option value="0">0%</option>
-                <option value="-2">-2%</option>
-                <option value="-4">-4%</option>
-              </select>
-            </div>
-            <div style="margin-right: 10px;">
-                <input type="checkbox" id="combw" v-model="ecomb">7+8
-            </div>
+        <div>
         </div>
         <div>
         </div>
         <div class="south">
             <div v-if="flowtype === 'vhc'">
-                <input type="text" class="s-flow" id="flow4" v-model="f4" placeholder="vhc">
-                <input type="text" class="s-flow" id="flow6" v-model="f6" placeholder="vhc">
+                <input type="text" class="s-flow" id="flow7" v-model="f7" placeholder="vhc">
+                <input type="text" class="s-flow" id="flow8" v-model="f8" placeholder="vhc">
             </div>
             <div v-else-if="flowtype === 'uvp'">
-                <input type="text" class="s-flow" id="flow4" v-model="f4" placeholder="uvp">
-                <input type="text" class="s-flow" id="flow6" v-model="f6" placeholder="uvp">
+                <input type="text" class="s-flow" id="flow7" v-model="f7" placeholder="uvp">
+                <input type="text" class="s-flow" id="flow8" v-model="f8" placeholder="uvp">
             </div>
             <div v-else>
-                <input type="text" class="s-flow" id="flow71" v-model="f41" placeholder="voit">
-                <input type="text" class="s-flow" id="flow81" v-model="f61" placeholder="voit"><br>
-                <input type="text" class="s-flow" id="flow72" v-model="f42" placeholder="cam">
-                <input type="text" class="s-flow" id="flow82" v-model="f62" placeholder="cam"><br>
-                <input type="text" class="s-flow" id="flow73" v-model="f43" placeholder="TR">
-                <input type="text" class="s-flow" id="flow83" v-model="f63" placeholder="TR"><br>
-                <input type="text" class="s-flow" id="flow74" v-model="f44" placeholder="mot">
-                <input type="text" class="s-flow" id="flow84" v-model="f64" placeholder="mot"><br>
-                <input type="text" class="s-flow" id="flow75" v-model="f45" placeholder="vélo">
-                <input type="text" class="s-flow" id="flow85" v-model="f65" placeholder="vélo"><br>
+                <input type="text" class="s-flow" id="flow71" v-model="f71" placeholder="voit">
+                <input type="text" class="s-flow" id="flow81" v-model="f81" placeholder="voit"><br>
+                <input type="text" class="s-flow" id="flow72" v-model="f72" placeholder="cam">
+                <input type="text" class="s-flow" id="flow82" v-model="f82" placeholder="cam"><br>
+                <input type="text" class="s-flow" id="flow73" v-model="f73" placeholder="TR">
+                <input type="text" class="s-flow" id="flow83" v-model="f83" placeholder="TR"><br>
+                <input type="text" class="s-flow" id="flow74" v-model="f74" placeholder="mot">
+                <input type="text" class="s-flow" id="flow84" v-model="f84" placeholder="mot"><br>
+                <input type="text" class="s-flow" id="flow75" v-model="f75" placeholder="vélo">
+                <input type="text" class="s-flow" id="flow85" v-model="f85" placeholder="vélo"><br>
             </div>
             <div>
               <select v-model="eslope" style="margin-top: 10px;">
@@ -121,7 +126,7 @@
               </select>
             </div>
             <div style="margin-top: 10px;">
-                <input type="checkbox" id="combw" v-model="scomb">4+6
+                <input type="checkbox" id="combe" v-model="ecomb">7+8
             </div>
         </div>
         <div>

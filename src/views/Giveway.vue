@@ -1,4 +1,6 @@
 <template>
+  <div class="input">
+    <h2>Forme du carrefour</h2>
     <div class="checkbox-container">
       <checkbox-item ref="checkbox1" checkbox-id="checkbox1" :image="image1" @checkbox-change="handleCheckboxChange" />
       <checkbox-item ref="checkbox2" checkbox-id="checkbox2" :image="image2" @checkbox-change="handleCheckboxChange" />
@@ -7,10 +9,11 @@
       <checkbox-item ref="checkbox5" checkbox-id="checkbox5" :image="image5" @checkbox-change="handleCheckboxChange" />
       <!-- Add more checkbox items -->
     </div>
+  </div>
 
     <div v-if="selectedCheckbox">
       <!-- Render additional element based on the selected checkbox -->
-      <component :is="selectedCheckboxComponent" @child-data="handleChildData"/>
+      <component :is="selectedCheckboxComponent" @child-data="callAPI"/>
     </div>
   </template>
   
@@ -29,7 +32,7 @@
   import image2 from "../assets/T2.png"
   import image3 from "../assets/T3.png"
   import image4 from "../assets/T4.png"
-  import image5 from "../assets/T5.png"
+  import image5 from "../assets/C1.png"
   
   export default {
     components: {
@@ -81,9 +84,54 @@
                     this.selectedCheckboxComponent = null;
                     }
                     }},
-                    handleChildData(data) {
-                        // Access the child data here
-                        console.log(data);
+                    tupleToStringKey(tuple){
+                      return JSON.stringify(tuple)
+                    },
+                    callAPI(data) {
+
+                      const dataform = new FormData();
+
+                      if (this.selectedCheckbox === 'checkbox5') {
+                        dataform.append('flow',JSON.stringify(data['flow']))
+                        dataform.append('flowtype',data['flowtype'])
+                        dataform.append('slope',JSON.stringify({1:data['wslope'], 2:data['wslope'], 3:data['wslope'],
+                                                                4:data['sslope'], 5:data['sslope'], 6:data['sslope'],
+                                                                7:data['eslope'], 8:data['eslope'], 9:data['eslope'],
+                                                                10:data['nslope'], 11:data['nslope'], 12:data['nslope']}))
+                        dataform.append('combine',JSON.stringify({west:data['wcomb'],east:data['ecomb'],south:data['scomb'],north:data['ncomb']}))
+                        dataform.append('savepath',this.savepath)
+                        dataform.append('email',this.email)
+                      } else {
+                        const west = this.tupleToStringKey([2,3])
+                        const east = this.tupleToStringKey([7,8])
+                        const south = this.tupleToStringKey([4,6])
+                        
+                        // Append data properties to the FormData object
+                        dataform.append('flow',JSON.stringify(data['flow']))
+                        dataform.append('flowtype',data['flowtype'])
+                        dataform.append('slope',JSON.stringify({2:data['wslope'],3:data['wslope'],4:data['sslope'],6:data['sslope'],7:data['eslope'],8:data['eslope']}))
+                        dataform.append('combine',JSON.stringify({west:data['wcomb'],east:data['ecomb'],south:data['scomb']}))
+                        dataform.append('savepath',data['savepath'])
+                        dataform.append('email',data['email'])
+                      }
+
+                        // let endpoint = null
+
+                        // axios.post(this.config.backendUrl + endpoint,dataform,{
+                        // headers: {
+                        // 'Content-Type': 'multipart/form-data'
+                        // }
+                        // })
+                        // .then(response => {
+                        //     console.log('Post success!')
+                        //     console.log(response.data);
+                        // })
+                        // .catch(error => {
+                        //     console.error(error)
+                        // })
+                        for (var pair of dataform.entries()) {
+                            console.log(pair[0]+ ', ' + pair[1]); 
+                        }
                     },
                 },
   };
