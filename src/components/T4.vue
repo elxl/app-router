@@ -112,7 +112,7 @@
             <input type="text" class="s-flow" id="flow65" v-model="f65" placeholder="vélo"><br>
         </div>
         <div>
-          <select v-model="eslope" style="margin-top: 10px;">
+          <select v-model="sslope" style="margin-top: 10px;">
             <option value="4">4%</option>
             <option value="2">2%</option>
             <option value="0">0%</option>
@@ -228,6 +228,6 @@ export default {
 }
 </script>
 
-<style scoped src="../style/giveway-style.css">
+<style scoped src="../style/giveway-style-4.css">
 
 </style>

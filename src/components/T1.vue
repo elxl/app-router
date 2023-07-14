@@ -55,7 +55,7 @@
         </div>
         <div class="west">
             <div style="margin-right: 10px;">
-                <input type="checkbox" id="combs" v-model="scomb">4+6
+                <input type="checkbox" id="combw" v-model="scomb">4+6
             </div>
             <div>
               <select v-model="sslope" style="margin-right: 10px;">

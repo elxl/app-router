@@ -136,6 +136,6 @@
                 },
   };
   </script>
-  <style scoped src="../style/giveway-style.css">
+  <style scoped src="../style/giveway-style-4.css">
 </style>
   
