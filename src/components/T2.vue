@@ -18,6 +18,18 @@
       <div>
       </div>
       <div class="north">
+          <div style="margin-top: 10px;">
+              <input type="checkbox" id="combn" v-model="scomb">4+6
+          </div>
+          <div>
+            <select v-model="sslope" style="margin-top: 10px;">
+              <option value="4">4%</option>
+              <option value="2">2%</option>
+              <option value="0">0%</option>
+              <option value="-2">-2%</option>
+              <option value="-4">-4%</option>
+            </select>
+          </div>
           <div v-if="flowtype === 'vhc'">
               <input type="text" class="n-flow" id="flow6" v-model="f6" placeholder="vhc">
               <input type="text" class="n-flow" id="flow4" v-model="f4" placeholder="vhc">
@@ -37,18 +49,6 @@
               <input type="text" class="n-flow" id="flow44" v-model="f64" placeholder="mot"><br>
               <input type="text" class="n-flow" id="flow65" v-model="f45" placeholder="vélo">
               <input type="text" class="n-flow" id="flow45" v-model="f65" placeholder="vélo"><br>
-          </div>
-          <div>
-            <select v-model="sslope" style="margin-top: 10px;">
-              <option value="4">4%</option>
-              <option value="2">2%</option>
-              <option value="0">0%</option>
-              <option value="-2">-2%</option>
-              <option value="-4">-4%</option>
-            </select>
-          </div>
-          <div style="margin-top: 10px;">
-              <input type="checkbox" id="combn" v-model="scomb">4+6
           </div>
       </div>
       <div>

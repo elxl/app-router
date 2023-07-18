@@ -391,7 +391,7 @@
           for (let i=1; i<=12; i++) {
             temp[i] = []
             for (let j=1; j<=5; j++) {
-              temp[i].append(this['f'+i+j])
+              temp[i].push(this['f'+i+j])
             }
           }
           data['flow'] = temp

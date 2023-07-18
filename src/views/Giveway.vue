@@ -18,6 +18,9 @@
   </template>
   
   <script>
+  import axios from 'axios'
+  import config from "./config.json"
+
   import { shallowRef,  ref, computed } from 'vue'
 
   import CheckboxItem from '../components/CheckboxItem.vue';
@@ -40,6 +43,8 @@
     },
     data () {
         return{
+            config: config,
+
             image1,
             image2,
             image3,
@@ -92,6 +97,7 @@
                       const dataform = new FormData();
 
                       if (this.selectedCheckbox === 'checkbox5') {
+                        dataform.append('jtype', 'C')
                         dataform.append('flow',JSON.stringify(data['flow']))
                         dataform.append('flowtype',data['flowtype'])
                         dataform.append('slope',JSON.stringify({1:data['wslope'], 2:data['wslope'], 3:data['wslope'],
@@ -107,6 +113,7 @@
                         const south = this.tupleToStringKey([4,6])
                         
                         // Append data properties to the FormData object
+                        dataform.append('jtype', 'T')
                         dataform.append('flow',JSON.stringify(data['flow']))
                         dataform.append('flowtype',data['flowtype'])
                         dataform.append('slope',JSON.stringify({2:data['wslope'],3:data['wslope'],4:data['sslope'],6:data['sslope'],7:data['eslope'],8:data['eslope']}))
@@ -115,23 +122,23 @@
                         dataform.append('email',data['email'])
                       }
 
-                        // let endpoint = null
+                        let endpoint = 'giveway'
 
-                        // axios.post(this.config.backendUrl + endpoint,dataform,{
-                        // headers: {
-                        // 'Content-Type': 'multipart/form-data'
-                        // }
-                        // })
-                        // .then(response => {
-                        //     console.log('Post success!')
-                        //     console.log(response.data);
-                        // })
-                        // .catch(error => {
-                        //     console.error(error)
-                        // })
-                        for (var pair of dataform.entries()) {
-                            console.log(pair[0]+ ', ' + pair[1]); 
+                        axios.post(this.config.backendUrl + endpoint,dataform,{
+                        headers: {
+                        'Content-Type': 'multipart/form-data'
                         }
+                        })
+                        .then(response => {
+                            console.log('Post success!')
+                            console.log(response.data);
+                        })
+                        .catch(error => {
+                            console.error(error)
+                        })
+                    //     for (var pair of dataform.entries()) {
+                    //         console.log(pair[0]+ ', ' + pair[1]); 
+                    //     }
                     },
                 },
   };
