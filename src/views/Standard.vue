@@ -180,12 +180,10 @@
 
 <script>
 import axios from 'axios'
-import config from "./config.json"
 
 export default {
     data () {
         return {
-            config: config,
 
             cycle:90,
             iv:2,
@@ -459,7 +457,7 @@ export default {
                 endpoint = 'standard-default'
             }
 
-            axios.post(this.config.backendUrl + endpoint,data,{
+            axios.post(process.env.VUE_APP_BACKEND_URL + endpoint,data,{
             headers: {
             'Content-Type': 'multipart/form-data'
             }

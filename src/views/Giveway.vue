@@ -19,7 +19,6 @@
   
   <script>
   import axios from 'axios'
-  import config from "./config.json"
 
   import { shallowRef,  ref, computed } from 'vue'
 
@@ -43,7 +42,6 @@
     },
     data () {
         return{
-            config: config,
 
             image1,
             image2,
@@ -123,8 +121,9 @@
                       }
 
                         let endpoint = 'giveway'
+                        console.log(process.env.VUE_APP_BACKEND_URL)
 
-                        axios.post(this.config.backendUrl + endpoint,dataform,{
+                        axios.post(process.env.VUE_APP_BACKEND_URL + endpoint,dataform,{
                         headers: {
                         'Content-Type': 'multipart/form-data'
                         }
