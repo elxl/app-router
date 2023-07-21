@@ -14,6 +14,12 @@
     <div v-if="selectedCheckbox">
       <!-- Render additional element based on the selected checkbox -->
       <component :is="selectedCheckboxComponent" @child-data="callAPI"/>
+      <success-modal
+      v-if="showModal"
+      :message="successMessage"
+      :show="showModal"
+      @close="showModal = false"
+    />
     </div>
   </template>
   
@@ -23,6 +29,7 @@
   import { shallowRef,  ref, computed } from 'vue'
 
   import CheckboxItem from '../components/CheckboxItem.vue';
+  import SuccessModal from './SuccessModal.vue';
 
   import AdditionalElements1 from '../components/T1.vue';
   import AdditionalElements2 from '../components/T2.vue';
@@ -39,9 +46,12 @@
   export default {
     components: {
       CheckboxItem,
+      SuccessModal,
     },
     data () {
         return{
+            showModal: false,
+            successMessage: "Le calcul a été soumis avec succès ! Le résultat sera envoyé par e-mail dès qu'il sera terminé.",
 
             image1,
             image2,
@@ -131,10 +141,14 @@
                         .then(response => {
                             console.log('Post success!')
                             console.log(response.data);
+                            this.showModal = true;
                         })
                         .catch(error => {
                             console.error(error)
+                            alert(`La soumission a échoué à cause de ${error.message}`)
                         })
+
+                        
                     //     for (var pair of dataform.entries()) {
                     //         console.log(pair[0]+ ', ' + pair[1]); 
                     //     }

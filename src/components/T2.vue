@@ -10,7 +10,7 @@
     </label>
     <label>
       <input type="radio" v-model="flowtype" value="detailed" />
-      Catécories
+      Catégories
     </label>
   </div>
   
@@ -129,6 +129,10 @@
   </div>
   <div class="details">
     <label for="savefile" class="checkbox">    
+    Affaire:
+    <input type="text" id="savefile" v-model="project">
+    </label>
+    <label for="savefile" class="checkbox">    
     Nom de fichier:
     <input type="text" id="savefile" v-model="savepath">
     </label>
@@ -196,6 +200,7 @@
         eslope:'0',
   
         flowtype:'vhc',
+        project:null,
         savepath:null,
         email:null,
       }
@@ -210,7 +215,7 @@
           wcomb: this.wcomb,
           ecomb: this.ecomb,
           scomb: this.scomb,
-          savepath: this.savepath,
+          savepath: this.project+'-'+this.savepath,
           email:this.email
         }
   

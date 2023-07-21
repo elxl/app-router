@@ -158,6 +158,10 @@
         Mouvements déterminants en conflits
         </label>
         <label for="savefile" class="checkbox">    
+        Affaire:
+        <input type="text" id="savefile" v-model="project">
+        </label>
+        <label for="savefile" class="checkbox">  
         Nom de fichier:
         <input type="text" id="savefile" v-model="savepath">
         </label>
@@ -168,10 +172,13 @@
     </div>
 
     <div class="next" ref="bottomElement">
-        <!-- <router-link :to="{ name : 'result'}">
-            <button class="nextstep" @click="callAPI" id="submit">Submit</button>
-        </router-link> -->
         <button class="nextstep" @click="validateData" id="submit">Calculer</button>
+        <success-modal
+        v-if="showModal"
+        :message="successMessage"
+        :show="showModal"
+        @close="showModal = false"
+        />
     </div>
    
 </div>
@@ -180,10 +187,16 @@
 
 <script>
 import axios from 'axios'
+import SuccessModal from './SuccessModal.vue';
 
 export default {
+    components: {
+      SuccessModal,
+    },
     data () {
         return {
+            showModal: false,
+            successMessage: "Le calcul a été soumis avec succès ! Le résultat sera envoyé par e-mail dès qu'il sera terminé.",
 
             cycle:90,
             iv:2,
@@ -242,6 +255,7 @@ export default {
 
             opt:false,
             conflict:false,
+            project:null,
             savepath:null,
             email:null,
         }
@@ -428,8 +442,6 @@ export default {
             // Call API
             this.callAPI()
 
-            // Navigate to result page
-            this.$router.push({ name: "result" });
         },
 
 
@@ -444,7 +456,7 @@ export default {
             data.append('default',this.ig_mode)
             data.append('opt',this.opt)
             data.append('conflict',this.conflict)
-            data.append('savepath',this.savepath)
+            data.append('savepath',this.project+'-'+this.savepath)
             data.append('email',this.email)
 
             let endpoint = null
@@ -465,12 +477,13 @@ export default {
             .then(response => {
                 console.log('Post success!')
                 console.log(response.data);
+                this.showModal = true;
             })
             .catch(error => {
                 console.error(error)
+                alert(`La soumission a échoué à cause de ${error.message}`)
             })
             
-
         },
 
         getname () {

@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Standard from '../views/Standard.vue'
 import Advanced from '../views/Advanced.vue'
 import Giveway from '../views/Giveway.vue'
-import Result from '../views/Message.vue'
 
 const routes = [
   {
@@ -20,11 +19,6 @@ const routes = [
     name: 'giveway',
     component: Giveway
   },
-  {
-    path: '/result',
-    name: 'result',
-    component: Result
-  }
 ]
 
 const router = createRouter({
