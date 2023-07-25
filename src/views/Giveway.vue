@@ -51,7 +51,7 @@
     data () {
         return{
             showModal: false,
-            successMessage: "Le calcul a été soumis avec succès ! Le résultat sera envoyé par e-mail dès qu'il sera terminé.",
+            successMessage: "Le calcul a été soumis avec succès ! le résultat sera téléchargé lorsque le calcul sera terminé.",
 
             image1,
             image2,
@@ -97,62 +97,91 @@
                     this.selectedCheckboxComponent = null;
                     }
                     }},
-                    tupleToStringKey(tuple){
-                      return JSON.stringify(tuple)
-                    },
-                    callAPI(data) {
+        tupleToStringKey(tuple){
+          return JSON.stringify(tuple)
+        },
+        async callAPI(data) {
 
-                      const dataform = new FormData();
+          const dataform = new FormData();
 
-                      if (this.selectedCheckbox === 'checkbox5') {
-                        dataform.append('jtype', 'C')
-                        dataform.append('flow',JSON.stringify(data['flow']))
-                        dataform.append('flowtype',data['flowtype'])
-                        dataform.append('slope',JSON.stringify({1:data['wslope'], 2:data['wslope'], 3:data['wslope'],
-                                                                4:data['sslope'], 5:data['sslope'], 6:data['sslope'],
-                                                                7:data['eslope'], 8:data['eslope'], 9:data['eslope'],
-                                                                10:data['nslope'], 11:data['nslope'], 12:data['nslope']}))
-                        dataform.append('combine',JSON.stringify({west:data['wcomb'],east:data['ecomb'],south:data['scomb'],north:data['ncomb']}))
-                        dataform.append('savepath',this.savepath)
-                        dataform.append('email',this.email)
-                      } else {
-                        const west = this.tupleToStringKey([2,3])
-                        const east = this.tupleToStringKey([7,8])
-                        const south = this.tupleToStringKey([4,6])
-                        
-                        // Append data properties to the FormData object
-                        dataform.append('jtype', 'T')
-                        dataform.append('flow',JSON.stringify(data['flow']))
-                        dataform.append('flowtype',data['flowtype'])
-                        dataform.append('slope',JSON.stringify({2:data['wslope'],3:data['wslope'],4:data['sslope'],6:data['sslope'],7:data['eslope'],8:data['eslope']}))
-                        dataform.append('combine',JSON.stringify({west:data['wcomb'],east:data['ecomb'],south:data['scomb']}))
-                        dataform.append('savepath',data['savepath'])
-                        dataform.append('email',data['email'])
-                      }
+          if (this.selectedCheckbox === 'checkbox5') {
+            dataform.append('jtype', 'C')
+            dataform.append('flow',JSON.stringify(data['flow']))
+            dataform.append('flowtype',data['flowtype'])
+            dataform.append('slope',JSON.stringify({1:data['wslope'], 2:data['wslope'], 3:data['wslope'],
+                                                    4:data['sslope'], 5:data['sslope'], 6:data['sslope'],
+                                                    7:data['eslope'], 8:data['eslope'], 9:data['eslope'],
+                                                    10:data['nslope'], 11:data['nslope'], 12:data['nslope']}))
+            dataform.append('combine',JSON.stringify({west:data['wcomb'],east:data['ecomb'],south:data['scomb'],north:data['ncomb']}))
+            dataform.append('savepath',this.savepath)
+            dataform.append('email',this.email)
+          } else {
+            const west = this.tupleToStringKey([2,3])
+            const east = this.tupleToStringKey([7,8])
+            const south = this.tupleToStringKey([4,6])
+            
+            // Append data properties to the FormData object
+            dataform.append('jtype', 'T')
+            dataform.append('flow',JSON.stringify(data['flow']))
+            dataform.append('flowtype',data['flowtype'])
+            dataform.append('slope',JSON.stringify({2:data['wslope'],3:data['wslope'],4:data['sslope'],6:data['sslope'],7:data['eslope'],8:data['eslope']}))
+            dataform.append('combine',JSON.stringify({west:data['wcomb'],east:data['ecomb'],south:data['scomb']}))
+            dataform.append('savepath',data['savepath'])
+            dataform.append('email',data['email'])
+          }
 
-                        let endpoint = 'giveway'
-                        console.log(process.env.VUE_APP_BACKEND_URL)
+            let endpoint = 'giveway'
+            console.log(process.env.VUE_APP_BACKEND_URL)
 
-                        axios.post(process.env.VUE_APP_BACKEND_URL + endpoint,dataform,{
-                        headers: {
-                        'Content-Type': 'multipart/form-data'
-                        }
-                        })
-                        .then(response => {
-                            console.log('Post success!')
-                            console.log(response.data);
-                            this.showModal = true;
-                        })
-                        .catch(error => {
-                            console.error(error)
-                            alert(`La soumission a échoué à cause de ${error.message}`)
-                        })
+            // axios.post(process.env.VUE_APP_BACKEND_URL + endpoint,dataform,{
+            // headers: {
+            // 'Content-Type': 'multipart/form-data'
+            // }
+            // })
+            // .then(response => {
+            //     console.log('Post success!')
+            //     console.log(response.data);
+            //     this.showModal = true;
+            // })
+            // .catch(error => {
+            //     console.error(error)
+            //     alert(`La soumission a échoué à cause de ${error.message}`)
+            // })
 
-                        
-                    //     for (var pair of dataform.entries()) {
-                    //         console.log(pair[0]+ ', ' + pair[1]); 
-                    //     }
-                    },
+            
+        //     for (var pair of dataform.entries()) {
+        //         console.log(pair[0]+ ', ' + pair[1]); 
+        //     }
+          try {
+            const response = await axios.post(process.env.VUE_APP_BACKEND_URL + endpoint, dataform, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            });
+
+            if (response.data && response.data.url) {
+
+              this.showModal = true;
+
+              const url = response.data.url;
+
+              // Create a hidden anchor element and set the URL and filename
+              const downloadLink = document.createElement('a');
+              downloadLink.href = url;
+
+              // Programmatically trigger the click event on the anchor element
+              downloadLink.click();
+
+              console.log('Download triggered.');
+            } else {
+              console.log(response.data.message);
+              alert("Un bug apparaît lors du calcul.");
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert(`La soumission a échoué à cause de ${error.message}`);
+          }
+        },
                 },
   };
   </script>

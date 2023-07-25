@@ -141,10 +141,6 @@
       Nom de fichier:
       <input type="text" id="savefile" v-model="savepath">
       </label>
-      <label for="email" class="checkbox">    
-      Email:
-      <input type="text" id="email" v-model="email">
-      </label>
     </div>
     <div class="next" ref="bottomElement">
             <button class="nextstep" @click="sendDataToParent" id="submit">Calculer</button>
