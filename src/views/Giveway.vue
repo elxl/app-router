@@ -164,13 +164,21 @@
               this.showModal = true;
 
               const url = response.data.url;
+              const filename = response.data.filename;
 
               // Create a hidden anchor element and set the URL and filename
               const downloadLink = document.createElement('a');
               downloadLink.href = url;
+              downloadLink.setAttribute('download', filename)
+
+              if (typeof downloadLink.download === 'undefined') {
+                  tempLink.setAttribute('target', '_blank')
+                }
 
               // Programmatically trigger the click event on the anchor element
+              document.body.appendChild(downloadLink)
               downloadLink.click();
+              document.body.removeChild(downloadLink)
 
               console.log('Download triggered.');
             } else {
