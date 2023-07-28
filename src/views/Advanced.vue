@@ -256,7 +256,7 @@
       data () {
           return {
               showModal: false,
-              successMessage: "Le calcul a été soumis avec succès ! Le résultat sera envoyé par e-mail dès qu'il sera terminé.",
+              successMessage: "Le calcul a été soumis. Le résultat sera envoyé par e-mail dès qu'il sera terminé.",
               
               cycle:90,
               iv:2,
@@ -397,6 +397,8 @@
           },
   
           callAPI() {
+
+              this.showModal = true;
   
               const data = new FormData();
               // Append data properties to the FormData object
@@ -429,7 +431,6 @@
               .then(response => {
                   console.log('Post success!')
                   console.log(response.data);
-                  this.showModal = true;
               })
               .catch(error => {
                   console.error(error)

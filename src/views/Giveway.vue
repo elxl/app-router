@@ -51,7 +51,7 @@
     data () {
         return{
             showModal: false,
-            successMessage: "Le calcul a été soumis avec succès ! le résultat sera téléchargé lorsque le calcul sera terminé.",
+            successMessage: "Le calcul a été soumis. Ne fermez pas cette fenêtre tant que le fichier de résultat n'est pas téléchargé",
 
             image1,
             image2,
@@ -101,6 +101,8 @@
           return JSON.stringify(tuple)
         },
         async callAPI(data) {
+
+          this.showModal = true;
 
           const dataform = new FormData();
 
@@ -160,8 +162,6 @@
             });
 
             if (response.data && response.data.url) {
-
-              this.showModal = true;
 
               const url = response.data.url;
               const filename = response.data.filename;

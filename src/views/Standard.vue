@@ -196,7 +196,7 @@ export default {
     data () {
         return {
             showModal: false,
-            successMessage: "Le calcul a été soumis avec succès ! Le résultat sera envoyé par e-mail dès qu'il sera terminé.",
+            successMessage: "Le calcul a été soumis. Le résultat sera envoyé par e-mail dès qu'il sera terminé.",
 
             cycle:90,
             iv:2,
@@ -447,6 +447,8 @@ export default {
 
         callAPI() {          
 
+            this.showModal = true;
+
             const data = new FormData();
             // Append data properties to the FormData object
             data.append('parameters',JSON.stringify({'cycle':this.cycle, 'ivt':this.iv,'vw':this.speedped,'vwig':this.speedpedig,'ig':this.ig}))
@@ -477,7 +479,6 @@ export default {
             .then(response => {
                 console.log('Post success!')
                 console.log(response.data);
-                this.showModal = true;
             })
             .catch(error => {
                 console.error(error)
