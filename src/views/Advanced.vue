@@ -206,6 +206,8 @@
       <div>
           <label for="secondary">Conflit autorisé:</label>
           <input type="text" class="authorize" id="secondary" placeholder="eg:V1,V2;P5,V4" v-model="authorize">
+          <label for="added">Conflit ajouté:</label>
+          <input type="text" class="authorize" id="added" placeholder="eg:V1,V2;P5,V4" v-model="added">
       </div>
   
       <div class="details">
@@ -258,39 +260,40 @@
               showModal: false,
               successMessage: "Le calcul a été soumis. Le résultat sera envoyé par e-mail dès qu'il sera terminé.",
               
-              cycle:90,
-              iv:2,
-              ig_mode:true,
-              ig:7,
-              file:null,
-              speedped:1,
-              speedpedig:1.2,
-              checkedbox:[],
-              checkedped:[],
-              bus:null,
-              scomb:'',
-              ecomb:'',
-              ncomb:'',
-              wcomb:'',
-              w40:'',
-              w41:'',
-              w42:'',
-              w43:'',
+              cycle: 90,
+              iv: 2,
+              ig_mode: true,
+              ig: 7,
+              file: null,
+              speedped: 1,
+              speedpedig: 1.2,
+              checkedbox: [],
+              checkedped: [],
+              bus: null,
+              scomb: '',
+              ecomb: '',
+              ncomb: '',
+              wcomb: '',
+              w40: '',
+              w41: '',
+              w42: '',
+              w43: '',
               check40: false,
               check41: false,
               check42: false,
               check43: false,
   
-              process:false,
+              process: false,
               nameofmvt: {},
-              mvt:[],
-              authorize:null,
+              mvt: [],
+              authorize: null,
+              added: null,
   
-              opt:false,
-              conflict:false,
-              project:null,
-              savepath:null,
-              email:null,
+              opt: false,
+              conflict: false,
+              project: null,
+              savepath: null,
+              email: null,
           }
       },
       created() {
@@ -406,6 +409,7 @@
               data.append('compose',JSON.stringify(this.compose))
               data.append('name',JSON.stringify(this.nameofmvt))
               data.append('secondary',this.authorize)
+              data.append('added',this.added)
               data.append('default',this.ig_mode)
               data.append('opt',this.opt)
               data.append('conflict',this.conflict)

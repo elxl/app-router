@@ -146,6 +146,8 @@
     <div>
         <label for="secondary">Conflit autorisé:</label>
         <input type="text" class="authorize" id="secondary" placeholder="eg:V1,V2;P5,V4" v-model="authorize">
+        <label for="added">Conflit ajouté:</label>
+        <input type="text" class="authorize" id="added" placeholder="eg:V1,V2;P5,V4" v-model="added">
     </div>
 
     <div class="details">
@@ -252,6 +254,7 @@ export default {
             nameofmvt: {},
             mvt:[],
             authorize:null,
+            added:null,
 
             opt:false,
             conflict:false,
@@ -423,6 +426,15 @@ export default {
                 return; 
             }
             }
+            // Check added conflict
+            if (this.added !== null){
+                const values = this.added.split(/[,;]/);
+                const allValuesExist = values.every(value => names.includes(value.trim()));
+                if (!allValuesExist) {
+                alert("Les mouvements dans les conflits ajoutés ne sont pas inclus!");
+                return; 
+            }
+            }
 
             // Check file name
             if (this.savepath === null) {
@@ -455,6 +467,7 @@ export default {
             data.append('compose',JSON.stringify(this.compose))
             data.append('name',JSON.stringify(this.nameofmvt))
             data.append('secondary',this.authorize)
+            data.append('added',this.added)
             data.append('default',this.ig_mode)
             data.append('opt',this.opt)
             data.append('conflict',this.conflict)
