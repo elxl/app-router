@@ -258,7 +258,7 @@ export default {
 
             opt:false,
             conflict:false,
-            project:null,
+            project:'',
             savepath:null,
             email:null,
         }

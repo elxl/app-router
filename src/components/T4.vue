@@ -138,7 +138,7 @@
   </label>
 </div>
 <div class="next" ref="bottomElement">
-        <button class="nextstep" @click="sendDataToParent" id="submit">Calculer</button>
+        <button class="nextstep" @click="validateData" id="submit">Calculer</button>
 </div>
 </template>
 
@@ -202,6 +202,37 @@ export default {
     }
   },
   methods: {
+    validateData() {
+            // Check if all flows are integers
+            const regex = /^-?\d+$/; // Regular expression to match integers
+            
+            if (this.flowtype!=='detailed') {
+              for (const i of [2,3,4,6,7,8]) {
+                if (!regex.test(this['f'+ i])) {
+                    alert("Veuillez saisir des nombres valides dans toutes les zones de texte du flux!");
+                    return; // Exit the method if any non-integer value is found
+                }
+            }    
+            } else {
+              for (const i of [2,3,4,6,7,8]) {
+                for (const j of [1,2,3,4,5]){
+                  if (!regex.test(this['f'+ i + j])) {
+                    alert("Veuillez saisir des nombres valides dans toutes les zones de texte du flux!");
+                    return; // Exit the method if any non-integer value is found
+                }
+                }
+            }    
+            }
+
+            // Check file name
+            if (this.savepath === null || this.savepath === '') {
+                alert("Veuillez indiquer le nom du fichier!");
+                return; 
+            }            
+          
+          this.sendDataToParent()
+        },
+
     sendDataToParent() {
       let data = {
         flowtype: this.flowtype,
