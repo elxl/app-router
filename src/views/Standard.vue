@@ -7,7 +7,7 @@
             <input type="text" class="input-text" id="cycle" v-model="cycle">s
         </div>
         <div class="meta-data">
-            <label for="iv">Temps intervéhiculaire :</label>
+            <label for="iv">Temps intervéhiculaire:</label>
             <input type="text" class="input-text" id="iv" v-model="iv">s/veh
         </div>
         <div class="meta-data">
@@ -146,6 +146,8 @@
     <div>
         <label for="secondary">Conflit autorisé:</label>
         <input type="text" class="authorize" id="secondary" placeholder="eg:V1,V2;P5,V4" v-model="authorize">
+        <label for="added">Conflit ajouté:</label>
+        <input type="text" class="authorize" id="added" placeholder="eg:V1,V2;P5,V4" v-model="added">
     </div>
 
     <div class="details">
@@ -158,16 +160,27 @@
         Mouvements déterminants en conflits
         </label>
         <label for="savefile" class="checkbox">    
+        Affaire:
+        <input type="text" id="savefile" v-model="project">
+        </label>
+        <label for="savefile" class="checkbox">  
         Nom de fichier:
-        <input type="text" id="savefile" placeholder="example.pdf" v-model="savepath">
+        <input type="text" id="savefile" v-model="savepath">
+        </label>
+        <label for="email" class="checkbox">    
+        Email:
+        <input type="text" id="email" v-model="email">
         </label>
     </div>
 
     <div class="next" ref="bottomElement">
-        <!-- <router-link :to="{ name : 'result'}">
-            <button class="nextstep" @click="callAPI" id="submit">Submit</button>
-        </router-link> -->
         <button class="nextstep" @click="validateData" id="submit">Calculer</button>
+        <success-modal
+        v-if="showModal"
+        :message="successMessage"
+        :show="showModal"
+        @close="showModal = false"
+        />
     </div>
    
 </div>
@@ -176,12 +189,16 @@
 
 <script>
 import axios from 'axios'
-import config from "./config.json"
+import SuccessModal from './SuccessModal.vue';
 
 export default {
+    components: {
+      SuccessModal,
+    },
     data () {
         return {
-            config: config,
+            showModal: false,
+            successMessage: "Le calcul a été soumis. Le résultat sera envoyé par e-mail dès qu'il sera terminé.",
 
             cycle:90,
             iv:2,
@@ -237,10 +254,13 @@ export default {
             nameofmvt: {},
             mvt:[],
             authorize:null,
+            added:null,
 
             opt:false,
             conflict:false,
+            project:null,
             savepath:null,
+            email:null,
         }
     },
     methods: {
@@ -333,6 +353,7 @@ export default {
             let combined = [];
             function checkComb(comb, comp,combined) {
                 if (comb.length !==0){
+                    comb = comb.replace(/\s/g, "")
                     let listOfTuples = comb.split(';').map(tupleString => tupleString.split(',').map(Number));
                     for (let tuple of listOfTuples) {
                         if (tuple.length > 0) {
@@ -397,7 +418,7 @@ export default {
             }
 
             // Check secondary conflict
-            if (this.authorize !== null){
+            if (this.authorize !== null && this.authorize !== ''){
                 const values = this.authorize.split(/[,;]/);
                 const allValuesExist = values.every(value => names.includes(value.trim()));
                 if (!allValuesExist) {
@@ -405,26 +426,40 @@ export default {
                 return; 
             }
             }
+            // Check added conflict
+            if (this.added !== null && this.added !== ''){
+                const values = this.added.split(/[,;]/);
+                const allValuesExist = values.every(value => names.includes(value.trim()));
+                if (!allValuesExist) {
+                alert("Les mouvements dans les conflits ajoutés ne sont pas inclus!");
+                return; 
+            }
+            }
 
             // Check file name
-            if (this.savepath === null) {
+            if (this.savepath === null || this.savepath === '') {
                 alert("Veuillez indiquer le nom du fichier!");
                 return; 
             }  
-            if (!this.savepath.endsWith(".pdf")) {
-                alert("Le nom de fichier doit se terminer par .pdf!");
-                return;                
-            }
+            // if (!this.savepath.endsWith(".pdf")) {
+            //     alert("Le nom de fichier doit se terminer par .pdf!");
+            //     return;                
+            // }
+            // check email address
+            if (this.email === null || this.email === '') {
+                alert("Veuillez indiquer le l'adresse email!");
+                return; 
+            }            
 
             // Call API
             this.callAPI()
 
-            // Navigate to result page
-            this.$router.push({ name: "result" });
         },
 
 
         callAPI() {          
+
+            this.showModal = true;
 
             const data = new FormData();
             // Append data properties to the FormData object
@@ -432,10 +467,12 @@ export default {
             data.append('compose',JSON.stringify(this.compose))
             data.append('name',JSON.stringify(this.nameofmvt))
             data.append('secondary',this.authorize)
+            data.append('added',this.added)
             data.append('default',this.ig_mode)
             data.append('opt',this.opt)
             data.append('conflict',this.conflict)
-            data.append('savepath',this.savepath)
+            data.append('savepath',this.project+'-'+this.savepath)
+            data.append('email',this.email)
 
             let endpoint = null
             if (this.ig_mode != true){
@@ -447,7 +484,7 @@ export default {
                 endpoint = 'standard-default'
             }
 
-            axios.post(this.config.backendUrl + endpoint,data,{
+            axios.post(process.env.VUE_APP_BACKEND_URL + endpoint,data,{
             headers: {
             'Content-Type': 'multipart/form-data'
             }
@@ -458,9 +495,9 @@ export default {
             })
             .catch(error => {
                 console.error(error)
+                alert(`La soumission a échoué à cause de ${error.message}`)
             })
             
-
         },
 
         getname () {

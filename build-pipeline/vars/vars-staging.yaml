@@ -1,0 +1,6 @@
+variables:
+  myenv: "staging"
+  myappname: 'abilytics-cu-frontend-staging-docker'
+  pmEnvironmentName: ''
+  SecretAuthCredentials: "credentials.json"
+  slotname: 'production'

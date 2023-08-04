@@ -1,0 +1,6 @@
+variables:
+  myenv: "production"
+  myappname: "abilytics-cu-frontend-prod-docker"
+  pmEnvironmentName: ""
+  SecretAuthCredentials: "credentials_prod.json"
+  slotname: "pre-production"

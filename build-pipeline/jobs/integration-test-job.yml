@@ -1,0 +1,47 @@
+parameters:
+  - name: RunIntegrationTest
+    type: string
+    default: 'true'
+  - name: SecretAuthCredentials
+    type: string
+  - name: pmEnvironmentName
+    type: string
+  - name: pmcollectionName
+    type: string
+  - name: WebappURL
+    type: string
+
+steps:
+  - script: |
+      if [ ! -f ${{ parameters.SecretAuthCredentials }} ]; then
+        echo "Secure file not found"
+        exit 1
+      fi
+    displayName: 'Check secure file'
+  - task: DownloadSecureFile@1
+    condition: and(succeeded(), eq(variables['RunIntegrationTest'], true))
+    displayName: Download secure file with credentials
+    name: AuthCredentials
+    inputs:
+      secureFile: ${{ parameters.SecretAuthCredentials }}
+
+  - task: Bash@3
+    displayName: Test endpoints via postman collection with newman
+    inputs:
+      targetType: inline
+      script: |
+        npm install -g newman
+        newman run $(Build.SourcesDirectory)/postman_collection/{{ parameters.pmcollectionName }}.postman_collection.json \
+        -e $(Build.SourcesDirectory)/postman_collection/${{ parameters.pmEnvironmentName }} \
+        --env-var url=${{ parameters.WebappURL }} \
+        -d $(AuthCredentials.secureFilePath) \
+        --reporters cli,junit \
+        --reporter-junit-export junit-report.xml
+  - task: PublishTestResults@2
+    displayName: Publish Test Results
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFormat: JUnit
+      testResultsFiles: "**/*.xml"
+      mergeTestResults: true
+      failTaskOnFailedTests: true

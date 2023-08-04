@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Standard from '../views/Standard.vue'
 import Advanced from '../views/Advanced.vue'
-import Result from '../views/Message.vue'
+import Giveway from '../views/Giveway.vue'
 
 const routes = [
   {
@@ -15,10 +15,10 @@ const routes = [
     component: Advanced
   },
   {
-    path: '/result',
-    name: 'result',
-    component: Result
-  }
+    path: '/perte-a-priorite',
+    name: 'giveway',
+    component: Giveway
+  },
 ]
 
 const router = createRouter({
