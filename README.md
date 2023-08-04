@@ -23,7 +23,12 @@ Vue CLI and axios will be installed. Axios is a promise-based HTTP Client for no
 
 ### Compiles and hot-reloads for development
 
-To launch the application, navigate into the folder and run:
+To launch the application locally, navigate into the folder and create an environment file named .env.development.local with the following content:
+```
+VUE_APP_BACKEND_URL = "http://localhost:8000/"
+```
+
+then run:
 
 ```
 npm run serve

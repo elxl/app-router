@@ -418,7 +418,7 @@ export default {
             }
 
             // Check secondary conflict
-            if (this.authorize !== null){
+            if (this.authorize !== null && this.authorize !== ''){
                 const values = this.authorize.split(/[,;]/);
                 const allValuesExist = values.every(value => names.includes(value.trim()));
                 if (!allValuesExist) {
@@ -427,7 +427,7 @@ export default {
             }
             }
             // Check added conflict
-            if (this.added !== null){
+            if (this.added !== null && this.added !== ''){
                 const values = this.added.split(/[,;]/);
                 const allValuesExist = values.every(value => names.includes(value.trim()));
                 if (!allValuesExist) {
@@ -437,7 +437,7 @@ export default {
             }
 
             // Check file name
-            if (this.savepath === null) {
+            if (this.savepath === null || this.savepath === '') {
                 alert("Veuillez indiquer le nom du fichier!");
                 return; 
             }  
@@ -446,7 +446,7 @@ export default {
             //     return;                
             // }
             // check email address
-            if (this.email === null) {
+            if (this.email === null || this.email === '') {
                 alert("Veuillez indiquer le l'adresse email!");
                 return; 
             }            
