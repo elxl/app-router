@@ -260,13 +260,13 @@
               showModal: false,
               successMessage: "Le calcul a été soumis. Le résultat sera envoyé par e-mail dès qu'il sera terminé.",
               
-              cycle: 90,
-              iv: 2,
+              cycle: '90',
+              iv: '2',
               ig_mode: true,
               ig: 7,
               file: null,
-              speedped: 1,
-              speedpedig: 1.2,
+              speedped: '1',
+              speedpedig: '1.2',
               checkedbox: [],
               checkedped: [],
               bus: null,
@@ -541,7 +541,7 @@
             if (this.email === null || this.email === '') {
                 alert("Veuillez indiquer le l'adresse email!");
                 return; 
-            }            
+            } 
 
             // Call API
             this.callAPI()
@@ -551,20 +551,35 @@
           callAPI() {
 
               this.showModal = true;
-  
+
               const data = new FormData();
               // Append data properties to the FormData object
               data.append('parameters',JSON.stringify({'cycle':this.cycle, 'ivt':this.iv,'vw':this.speedped,'vwig':this.speedpedig,'ig':this.ig}))
               data.append('compose',JSON.stringify(this.compose))
               data.append('name',JSON.stringify(this.nameofmvt))
-              data.append('secondary',this.authorize)
-              data.append('added',this.added)
+              if (this.authorize === ''){
+                data.append('secondary', null)
+              }
+              else {
+                data.append('secondary',this.authorize)
+              }             
+              if (this.added === ''){
+                data.append('added', null)
+              }
+              else {
+                data.append('added', this.added)
+              }
               data.append('default',this.ig_mode)
               data.append('opt',this.opt)
               data.append('conflict',this.conflict)
               data.append('savepath',this.project+'-'+this.savepath)
               data.append('email',this.email)
-              data.append('bus',this.bus)
+              if (this.bus === ''){
+                data.append('bus', null)
+              }
+              else {
+                data.append('bus',this.bus)
+              }
   
               let endpoint = null
               if (this.ig_mode != true){

@@ -466,8 +466,18 @@ export default {
             data.append('parameters',JSON.stringify({'cycle':this.cycle, 'ivt':this.iv,'vw':this.speedped,'vwig':this.speedpedig,'ig':this.ig}))
             data.append('compose',JSON.stringify(this.compose))
             data.append('name',JSON.stringify(this.nameofmvt))
-            data.append('secondary',this.authorize)
-            data.append('added',this.added)
+            if (this.authorize === ''){
+                data.append('secondary', null)
+              }
+              else {
+                data.append('secondary',this.authorize)
+              }             
+              if (this.added === ''){
+                data.append('added', null)
+              }
+              else {
+                data.append('added', this.added)
+              }
             data.append('default',this.ig_mode)
             data.append('opt',this.opt)
             data.append('conflict',this.conflict)
