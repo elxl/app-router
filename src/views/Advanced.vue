@@ -411,7 +411,7 @@
             let bus_candidate = [1,2,3,4,5,6,7,8,11,12,13,14,15,16,17,18,21,22,23,24,25,26,27,28,31,32,33,34,35,36,37,38]
             let includedNumbers = this.checkedbox.filter(element => bus_candidate.includes(parseInt(element)));
             let regex_comb = new RegExp(`^(${includedNumbers.join('|')}|;)+$`);
-            if (this.bus!==null && !regex_comb.test(this.bus)) {
+            if (this.bus!==null && this.bus!=='' && !regex_comb.test(this.bus)) {
                 alert('Mouvement non sélectionné ou le voie du train inclus dans les voies de bus!');
                 return;
             }
